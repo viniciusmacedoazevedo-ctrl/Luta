@@ -16,7 +16,7 @@ const targets = canInstaller ? 'nsis portable' : "zip -c.win.artifactName='VINI-
 if (!canInstaller) {
   console.log('\nℹ️  Sem Windows/Wine: gerando VINI-FIGHT-win-x64.zip (o instalador .exe precisa do Windows ou do GitHub Actions).\n');
 }
-execSync(`npx electron-builder --win ${targets} --x64`, { stdio: 'inherit' });
+execSync(`npx electron-builder --win ${targets} --x64 --publish never`, { stdio: 'inherit' });
 
 console.log('\n✔ Pronto! Arquivos em dist/:');
 if (canInstaller) {
