@@ -40,6 +40,8 @@
       this.resize();
       window.addEventListener('resize', () => this.resize());
       window.addEventListener('orientationchange', () => setTimeout(() => this.resize(), 250));
+      // Safari no iPhone: a barra de endereço aparece/some sem disparar 'resize' sempre
+      if (window.visualViewport) window.visualViewport.addEventListener('resize', () => this.resize());
       this.last = performance.now();
       requestAnimationFrame((ts) => this.loop(ts));
     },

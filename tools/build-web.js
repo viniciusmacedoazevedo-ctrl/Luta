@@ -13,4 +13,6 @@ for (const item of INCLUDE) {
   if (!fs.existsSync(from)) continue;
   fs.cpSync(from, path.join(OUT, item), { recursive: true });
 }
+// GitHub Pages: sem isso o Jekyll ignora pastas que começam com "_" (ex.: assets/characters/_shared)
+fs.writeFileSync(path.join(OUT, '.nojekyll'), '');
 console.log('✔ Jogo copiado para', OUT);

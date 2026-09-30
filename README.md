@@ -138,6 +138,24 @@ Abra `http://localhost:8080`.
 
 ---
 
+## 🍎 Jogar no iPhone / iPad (Safari) — e em qualquer celular
+
+O jogo é publicado como site pelo **GitHub Pages** (grátis):
+
+**https://viniciusmacedoazevedo-ctrl.github.io/Luta/**
+
+Configuração (uma vez só): no GitHub, **Settings → Pages → Build and deployment → Source:
+"Deploy from a branch" → Branch: `gh-pages` / `(root)` → Save**. A cada push o workflow
+`.github/workflows/pages.yml` atualiza o site sozinho.
+
+No iPhone:
+1. Abra o link no **Safari** e gire o celular na **horizontal**.
+2. Para ficar em **tela cheia como um app**: botão **Compartilhar** → **Adicionar à Tela de Início**.
+   O ícone VINI FIGHT aparece na tela inicial e abre sem a barra do Safari.
+3. Se o som não tocar, desligue o modo silencioso (chave lateral) e toque na tela uma vez.
+
+---
+
 ## 🪟 Gerar a versão para Windows (.exe)
 
 ### Opção A — automático pelo GitHub (recomendado, funciona até pelo Codespaces)
