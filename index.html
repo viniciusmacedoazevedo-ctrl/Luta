@@ -19,7 +19,12 @@
 <body class="is-pc">
   <div id="app">
     <canvas id="game" width="1280" height="720"></canvas>
-    <div id="ui"></div>
+    <div id="ui"><div id="boot" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#fff;font:18px system-ui,sans-serif;text-align:center;padding:20px">
+      <div style="font-size:34px;font-weight:800;color:#ffd600">VINI FIGHT</div>
+      <div>Carregando…</div>
+      <div id="boot-hint" style="font-size:14px;opacity:0;animation:vfhint 0s 8s forwards">Demorando? Aperte <b>Ctrl+Shift+R</b> ou abra <b>?reset</b> no fim do endereço.</div>
+      <style>@keyframes vfhint{to{opacity:.85}}</style>
+    </div></div>
     <div id="touch"></div>
     <div id="rotate">
       <div class="rotate-icon">📱</div>
@@ -32,6 +37,15 @@
   <!-- proteção de inicialização: se algo falhar, mostra o erro em vez de tela preta -->
   <script>
     (function () {
+      // ?reset no endereço: apaga cache/service worker antigos e recarrega limpo
+      if (/[?&]reset\b/.test(location.search)) {
+        var jobs = [];
+        if (navigator.serviceWorker) jobs.push(navigator.serviceWorker.getRegistrations().then(function (rs) { return Promise.all(rs.map(function (r) { return r.unregister(); })); }));
+        if (window.caches) jobs.push(caches.keys().then(function (ks) { return Promise.all(ks.map(function (k) { return caches.delete(k); })); }));
+        try { localStorage.clear(); } catch (e) {}
+        Promise.all(jobs).catch(function () {}).then(function () { location.replace(location.pathname); });
+        window.VF_RESETTING = true;
+      }
       var errs = [];
       window.addEventListener('error', function (e) {
         errs.push((e.message || 'erro ao carregar') + (e.filename ? ' — ' + e.filename.split('/').slice(-2).join('/') + ':' + (e.lineno || '') : (e.target && e.target.src ? ' — ' + e.target.src : '')));
@@ -55,7 +69,9 @@
         };
         document.body.appendChild(d);
       };
-      window.addEventListener('load', function () { setTimeout(function () { if (!window.VF_READY) window.VF_BOOT_FAIL(); }, 4000); });
+      // não depende do evento 'load' (que pode nunca chegar se um arquivo travar)
+      setTimeout(function () { if (!window.VF_READY && !window.VF_RESETTING) window.VF_BOOT_FAIL(); }, 12000);
+      window.addEventListener('load', function () { setTimeout(function () { if (!window.VF_READY && !window.VF_RESETTING) window.VF_BOOT_FAIL(); }, 4000); });
     })();
   </script>
   <!-- configuração -->

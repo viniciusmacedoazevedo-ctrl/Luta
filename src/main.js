@@ -50,6 +50,8 @@
       VF.Game.go('title');
     }
     window.VF_READY = true;
+    const bootEl = document.getElementById('boot');
+    if (bootEl) bootEl.remove();
   }
 
   function safeBoot() {
