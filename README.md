@@ -11,6 +11,9 @@ combos elaborados, **SPECIAL** e **ULTIMATE** cinematográfica para cada um.
 
 ## ▶️ Como iniciar (o jeito mais rápido)
 
+> 📦 Baixou o `.zip`? **Extraia antes** (botão direito → *Extrair tudo…*). Abrir o `index.html`
+> de dentro do ZIP não funciona, porque o Windows não copia os outros arquivos.
+
 **Abra o arquivo `index.html`** com dois cliques (Chrome, Edge ou Firefox). O jogo abre direto,
 sem instalar nada. Para testar no celular, use o servidor local (`npm start`, veja abaixo).
 

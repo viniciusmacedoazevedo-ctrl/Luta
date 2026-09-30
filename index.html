@@ -57,7 +57,10 @@
         d.id = 'bootfail';
         d.style.cssText = 'position:fixed;inset:0;z-index:99999;background:#120a24;color:#fff;font:15px system-ui,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px;text-align:center';
         d.innerHTML = '<div style="font-size:30px;font-weight:800;color:#ffd600">VINI FIGHT não carregou</div>' +
-          '<div>Provavelmente o navegador guardou arquivos de uma versão antiga.</div>' +
+          (/\.zip|\/Temp\//i.test(location.href) && location.protocol === 'file:'
+            ? '<div style="font-size:18px;max-width:640px">Você abriu o jogo <b>de dentro do arquivo .zip</b>. O Windows só copia o index.html, sem os outros arquivos.<br><br>' +
+              'Feche esta aba, clique com o botão direito no .zip → <b>Extrair tudo…</b> → <b>Extrair</b>, e dê dois cliques no <b>index.html</b> da pasta extraída.</div>'
+            : '<div>Provavelmente o navegador guardou arquivos de uma versão antiga.</div>') +
           '<button id="bootfix" style="font-size:18px;padding:12px 22px;border-radius:10px;border:0;background:#ffd600;font-weight:800;cursor:pointer">LIMPAR CACHE E RECARREGAR</button>' +
           '<pre style="max-width:90vw;max-height:40vh;overflow:auto;font-size:12px;opacity:.7;white-space:pre-wrap;text-align:left"></pre>';
         d.querySelector('pre').textContent = errs.slice(0, 6).join('\n') || 'O jogo não iniciou a tempo.';
