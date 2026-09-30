@@ -114,25 +114,31 @@ Abra `http://localhost:8080`.
 
 ## 🪟 Gerar a versão para Windows (.exe)
 
-Requer Node.js 18+. **No Windows**:
+### Opção A — automático pelo GitHub (recomendado, funciona até pelo Codespaces)
+A cada `git push`, o GitHub Actions gera o **instalador do Windows** e o **APK do Android**.
+Vá na aba **Actions** do repositório → abra a execução mais recente de *"Build (Windows + Android)"*
+→ baixe em **Artifacts**: `VINI-FIGHT-Windows` (instalador + portátil) e `VINI-FIGHT-Android` (APK).
+Também dá para rodar manualmente: **Actions → Build (Windows + Android) → Run workflow**.
+
+### Opção B — no seu computador
+Requer Node.js 18+:
 
 ```bash
 npm install
 npm run build:win
 ```
 
-Os arquivos saem em `dist/`:
+- **No Windows**: gera em `dist/` o instalador `VINI FIGHT Setup 1.0.0.exe` e a versão
+  portátil `VINI-FIGHT-portable.exe`.
+- **No Linux/macOS/Codespaces** (sem Wine): gera `dist/VINI-FIGHT-win-x64.zip`.
+  Baixe o zip, extraia no Windows e abra **`VINI FIGHT.exe`** — o jogo roda sem instalar.
+  (O instalador "Setup" precisa do Windows, do Wine ou da Opção A.)
 
-- `VINI FIGHT Setup 1.0.0.exe` → instalador
-- `VINI-FIGHT-portable.exe` → versão portátil (roda sem instalar)
-- `dist/win-unpacked/VINI FIGHT.exe` → pasta pronta para copiar
-
-Para só abrir a versão desktop sem gerar instalador: `npm run desktop`.
-
-> Gerando em Linux/macOS, o `.exe` (pasta `win-unpacked`) é criado normalmente, mas o
-> instalador NSIS exige o **Wine** instalado.
+Para só abrir a versão desktop sem gerar nada: `npm run desktop`.
 
 ## 🤖 Gerar a versão para Android (.apk)
+
+> Sem instalar nada: use a **Opção A** acima (GitHub Actions) e baixe o artifact `VINI-FIGHT-Android`.
 
 Requer Node.js 18+ e o **[Android Studio](https://developer.android.com/studio)**
 (ele instala o Android SDK e o Java).

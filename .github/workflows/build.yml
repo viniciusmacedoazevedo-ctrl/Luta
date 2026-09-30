@@ -1,0 +1,54 @@
+# Gera automaticamente as versões Windows (.exe) e Android (.apk) na nuvem do GitHub.
+# Os arquivos ficam disponíveis na aba "Actions" → execução → "Artifacts".
+name: Build (Windows + Android)
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  windows:
+    name: Windows (.exe)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build:win
+      - uses: actions/upload-artifact@v4
+        with:
+          name: VINI-FIGHT-Windows
+          path: |
+            dist/*.exe
+          if-no-files-found: error
+
+  android:
+    name: Android (.apk)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: android-actions/setup-android@v3
+      - run: npm ci
+      - run: npm run android:sync
+      - name: Compilar APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+      - run: cp android/app/build/outputs/apk/debug/app-debug.apk VINI-FIGHT.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: VINI-FIGHT-Android
+          path: VINI-FIGHT.apk
+          if-no-files-found: error

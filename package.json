@@ -12,10 +12,11 @@
     "test": "node tools/test/smoke.js",
     "build:web": "node tools/build-web.js",
     "desktop": "npm run build:web && electron .",
-    "build:win": "npm run build:web && electron-builder --win --x64",
+    "build:win": "node tools/build-win.js",
     "android:add": "npm run build:web && npx cap add android",
     "android:sync": "npm run build:web && npx cap sync android",
-    "android:open": "npx cap open android"
+    "android:open": "npx cap open android",
+    "build:win:zip": "node tools/build-win.js --zip"
   },
   "build": {
     "appId": "com.vinifight.game",
@@ -65,5 +66,6 @@
     "electron": "^44.5.0",
     "electron-builder": "^26.15.3",
     "playwright": "^1.56.1"
-  }
+  },
+  "author": "Vinicius"
 }
