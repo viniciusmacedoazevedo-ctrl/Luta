@@ -187,6 +187,14 @@
     seg(ctx, p0, p1, w1, back ? shade(c1, -0.22) : c1);
     seg(ctx, p1, p2, w2, back ? shade(c2, -0.22) : c2);
     if (end === 'hand') D.circle(ctx, p2.x, p2.y, endR, back ? shade(endColor, -0.22) : endColor, 0);
+    if (!back && VF.Rig.cel) {
+      // brilho de cel-shading
+      const o = { x: -w1 * 0.16, y: -w1 * 0.16 };
+      const q = (p) => ({ x: p.x + o.x, y: p.y + o.y });
+      seg(ctx, q(p0), q(p1), w1 * 0.28, shade(c1, 0.32));
+      seg(ctx, q(p1), q(p2), w2 * 0.26, shade(c2, 0.32));
+      if (end === 'hand') D.circle(ctx, p2.x - endR * 0.3, p2.y - endR * 0.3, endR * 0.35, shade(endColor, 0.4), 0);
+    }
   }
 
   function shoe(ctx, foot, shinAng, color, accent, back, size) {
@@ -252,6 +260,10 @@
     // sombreamento lateral
     ctx.fillStyle = 'rgba(0,0,0,0.14)';
     ctx.fillRect(-ws - 10, -T - 10, w * 0.35, T + 20);
+    if (VF.Rig.cel) {
+      ctx.fillStyle = 'rgba(255,255,255,0.13)';
+      ctx.fillRect(ws * 0.25, -T - 10, w * 0.22, T + 20);
+    }
     if (skin.drawTorso) skin.drawTorso(ctx, T, w, col, f);
     ctx.restore();
     ctx.beginPath();
@@ -266,6 +278,7 @@
 
   VF.Rig = {
     HEAD_SCALE: 1.17,
+    cel: true,
     joints,
 
     /* opt: {x, y, facing, scale, colors, expr, t, fighter, alpha} */
@@ -273,7 +286,7 @@
       const b = skin.build;
       const col = opt.colors || skin.colors;
       const f = opt.fighter || {};
-      const s = opt.scale || 1;
+      const s = (opt.scale || 1) * (b.scale || 1);
       ctx.save();
       ctx.translate(opt.x, opt.y);
       ctx.scale((opt.facing || 1) * s, s);
@@ -336,6 +349,8 @@
         c.quadraticCurveTo(R * 1.6, R * 0.95, R * 1.7, R * 2.4);
         c.closePath();
       }, col.shirt, 3);
+      if (skin.drawPortraitBack) skin.drawPortraitBack(ctx, info);
+      if (skin.drawNeckline) skin.drawNeckline(ctx, R, col, info);
       if (skin.drawBack) skin.drawBack(ctx, info);
       ctx.lineCap = 'round';
       seg(ctx, { x: 0, y: R * 1.1 }, { x: 0, y: 0 }, 17, OL);

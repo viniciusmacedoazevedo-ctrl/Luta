@@ -1,7 +1,7 @@
 {
   "name": "vini-fight",
   "productName": "VINI FIGHT",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "VINI FIGHT — jogo de luta 2D cartunesco para PC e celular (paródia fictícia).",
   "main": "electron/main.js",
   "private": true,

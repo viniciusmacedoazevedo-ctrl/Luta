@@ -1,34 +1,54 @@
 <!DOCTYPE html><html><head><meta charset="utf-8"><title>Sprites</title></head>
-<body style="margin:0;background:#333">
-<canvas id="c" width="1500" height="1300"></canvas>
+<body style="margin:0;background:#2a2238">
+<canvas id="c" width="1800" height="1500"></canvas>
 <script src="../../config/game.js"></script>
 <script src="../../config/controls.js"></script>
-<script src="../../config/characters.js"></script>
+<script src="../../config/movesets.js"></script>
+<script src="../../config/roster.js"></script>
 <script src="../../src/core/math.js"></script>
-<script src="../../assets/characters/rig.js"></script>
-<script src="../../assets/characters/poses.js"></script>
-<script src="../../assets/characters/vini.js"></script>
-<script src="../../assets/characters/arthur.js"></script>
-<script src="../../assets/characters/juexu.js"></script>
-<script src="../../assets/characters/lula.js"></script>
-<script src="../../assets/characters/bolsonaro.js"></script>
+<script src="../../assets/effects/particles.js"></script>
+<script src="../../assets/backgrounds/common.js"></script>
+<script src="../../assets/effects/bigfx.js"></script>
+<script src="../../assets/characters/_shared/rig.js"></script>
+<script src="../../assets/characters/_shared/appearance.js"></script>
+<script src="../../assets/characters/_shared/poses.js"></script>
+<script src="../../assets/characters/vini/character.js"></script>
+<script src="../../assets/characters/arthur/character.js"></script>
+<script src="../../assets/characters/julia_eduarda/character.js"></script>
+<script src="../../assets/characters/lula/character.js"></script>
+<script src="../../assets/characters/bolsonaro/character.js"></script>
+<script src="../../assets/characters/xandao/character.js"></script>
+<script src="../../assets/characters/will/character.js"></script>
+<script src="../../assets/characters/deyverson/character.js"></script>
+<script src="../../assets/characters/wal/character.js"></script>
+<script src="../../assets/characters/dg/character.js"></script>
+<script src="../../assets/characters/gabriel/character.js"></script>
+<script src="../../assets/characters/muskito/character.js"></script>
+<script src="../../assets/characters/docinho/character.js"></script>
+<script src="../../assets/characters/livia/character.js"></script>
+<script src="../../assets/characters/laura/character.js"></script>
+<script src="../../assets/characters/anny/character.js"></script>
+<script src="../../assets/characters/julia_negreiros/character.js"></script>
+<script src="../../assets/characters/allane/character.js"></script>
+<script src="../../assets/characters/bia/character.js"></script>
+<script src="../../assets/characters/einstein/character.js"></script>
+<script src="../../assets/characters/jovanira/character.js"></script>
+<script src="../../assets/characters/giovana/character.js"></script>
+<script src="../../assets/characters/elena/character.js"></script>
+<script src="../../assets/characters/lutu/character.js"></script>
+<script src="../../assets/characters/leidiane/character.js"></script>
 <script>
+VF.Quality = { particles: 1, afterimages: true, textPops: true };
 const ctx = document.getElementById('c').getContext('2d');
-const P = VF.Poses;
-const ids = ['vini','arthur','juexu','lula','bolsonaro'];
-const poses = [
-  ['idle', P.idle(0), 'normal'], ['walk', P.walk(0.3), 'normal'], ['punch', P.K.PUNCH, 'angry'], ['kick', P.K.KICK, 'angry'],
-  ['heavy', P.K.HEAVY, 'angry'], ['block', P.K.BLOCK, 'normal'], ['hurt', P.K.HURT, 'hurt'], ['jump', P.K.JUMP, 'normal'],
-  ['down', P.K.LYING, 'ko'], ['victory', null, 'happy']
-];
-ids.forEach((id, row) => {
-  const skin = VF.Skins[id];
-  poses.forEach(([n, pose, e], col) => {
-    if (!pose) pose = skin.victoryPose(0.3);
-    const f = { state: n === 'victory' ? 'victory' : n, vx: 0 };
-    ctx.fillStyle = '#555'; ctx.fillRect(col*150, row*260+240, 150, 2);
-    VF.Rig.draw(ctx, skin, pose, { x: col*150+60, y: row*260+240, facing: 1, scale: 0.95, expr: e, fighter: f, t: 0.3 });
-  });
+const mode = location.hash.slice(1) || 'idle';
+VF.CHARACTERS.forEach((d, i) => {
+  const col = i % 9, row = Math.floor(i / 9);
+  const x = 90 + col * 195, y = 300 + row * 330;
+  const f = { state: mode === 'victory' ? 'victory' : 'idle', vx: 0, def: d, skin: d.skin, anim: 0.3, hp: 1000 };
+  let pose = mode === 'victory' ? (d.skin.victoryPose ? d.skin.victoryPose(0.3, f) : VF.Poses.victory(0.3)) : mode === 'attack' ? VF.Poses.P(VF.Poses.K[(d.anim.poses||{}).heavy || 'hook']) : VF.Poses.idle(0.3, f);
+  if (d.partnerSkin) VF.Rig.draw(ctx, d.partnerSkin, pose, { x: x - 40, y, facing: 1, scale: 0.9 * 0.94, fighter: f, t: 0.3 });
+  VF.Rig.draw(ctx, d.skin, pose, { x, y, facing: 1, scale: 0.9, fighter: f, t: 0.3, expr: mode === 'victory' ? 'happy' : 'normal' });
+  ctx.fillStyle = '#fff'; ctx.font = '14px sans-serif'; ctx.fillText(d.name, x - 50, y + 22);
+  VF.Rig.portrait(ctx, d.skin, 60 + i * 70, 1450, 64, {});
 });
-ids.forEach((id,i)=> VF.Rig.portrait(ctx, VF.Skins[id], 80+i*140, 1450-200, 110, {}));
 </script></body></html>

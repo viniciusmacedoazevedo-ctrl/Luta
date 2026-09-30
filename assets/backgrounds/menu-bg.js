@@ -1,76 +1,57 @@
-/* Fundo animado dos menus: raios giratórios, partículas de energia
-   e dois lutadores aleatórios em pose de luta. */
+/* Fundo animado dos menus: uma arena real com movimento de câmera,
+   iluminação colorida, partículas e três lutadores ao fundo. */
 (function () {
   const BG = VF.BG;
 
   VF.Backgrounds.menu = {
-    create(opts) {
-      opts = opts || {};
+    create() {
       const ids = VF.CHARACTERS.map((c) => c.id);
-      const a = VF.M.choose(ids);
-      let b = VF.M.choose(ids);
-      if (b === a) b = ids[(ids.indexOf(a) + 1) % ids.length];
-      const ps = new VF.ParticleSystem(260);
-      return { ps, a, b, t: 0, showFighters: opts.fighters !== false };
+      const pick = () => ids.splice(Math.floor(Math.random() * ids.length), 1)[0];
+      const arena = VF.M.choose(['rua', 'urbana', 'futurista', 'campo', 'igreja', 'escola', 'praca']);
+      const bg = VF.Backgrounds[arena];
+      const trio = [pick(), pick(), pick()].map((id) => new VF.Puppet(id));
+      return { ps: new VF.ParticleSystem(200), arena, bg, bgState: bg.create(), trio, showFighters: true };
     },
 
     draw(ctx, t, st, dt) {
       dt = dt || 1 / 60;
-      const g = ctx.createRadialGradient(640, 360, 50, 640, 360, 900);
-      g.addColorStop(0, '#3a0f5c');
-      g.addColorStop(0.55, '#170733');
-      g.addColorStop(1, '#07020f');
+      // câmera lenta passeando pela arena
+      const z = 1.12 + Math.sin(t * 0.13) * 0.05;
+      const px = Math.sin(t * 0.09) * 50;
+      ctx.save();
+      ctx.translate(640, 360);
+      ctx.scale(z, z);
+      ctx.translate(-640 + px, -360);
+      st.bg.draw(ctx, t, st.bgState);
+      if (st.showFighters) {
+        const pos = [[250, 1], [1030, -1], [640, 1]];
+        st.trio.forEach((p, i) => {
+          p.update(dt);
+          const [x, f] = pos[i];
+          ctx.fillStyle = 'rgba(0,0,0,0.4)';
+          ctx.beginPath();
+          ctx.ellipse(x, 642, 70, 10, 0, 0, Math.PI * 2);
+          ctx.fill();
+          if (i < 2) p.draw(ctx, x, 640, 1.25, f);
+        });
+      }
+      if (st.bg.front) st.bg.front(ctx, t, st.bgState);
+      ctx.restore();
+      // camada escura + luzes coloridas
+      const g = ctx.createLinearGradient(0, 0, 0, 720);
+      g.addColorStop(0, 'rgba(8,3,20,0.55)');
+      g.addColorStop(0.5, 'rgba(8,3,20,0.35)');
+      g.addColorStop(1, 'rgba(8,3,20,0.75)');
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, 1280, 720);
-      // raios giratórios
-      ctx.save();
-      ctx.translate(640, 330);
-      ctx.rotate(t * 0.08);
-      for (let i = 0; i < 16; i++) {
-        ctx.rotate((Math.PI * 2) / 16);
-        ctx.fillStyle = i % 2 ? 'rgba(255,61,113,0.06)' : 'rgba(0,229,255,0.05)';
-        ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.lineTo(1100, -90);
-        ctx.lineTo(1100, 90);
-        ctx.fill();
-      }
-      ctx.restore();
-      // linhas de velocidade diagonais
-      ctx.save();
-      ctx.strokeStyle = 'rgba(255,255,255,0.05)';
-      ctx.lineWidth = 3;
-      for (let i = 0; i < 14; i++) {
-        const x = ((i * 137 + t * 380) % 1700) - 200;
-        ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x - 300, 720);
-        ctx.stroke();
-      }
-      ctx.restore();
-      // partículas subindo
-      if (Math.random() < 0.6) {
+      BG.cone(ctx, 200 + Math.sin(t * 0.5) * 120, -40, 0.3, 900, 0.14, '#ff2d95', 0.18);
+      BG.cone(ctx, 1080 + Math.cos(t * 0.4) * 120, -40, -0.3, 900, 0.14, '#00e5ff', 0.18);
+      if (Math.random() < 0.5) {
         st.ps.spawn({ x: Math.random() * 1280, y: 740, vx: (Math.random() - 0.5) * 30, vy: -60 - Math.random() * 120, life: 5, size: 1.5 + Math.random() * 3, color: Math.random() < 0.5 ? '#ff3d71' : '#ffd600', add: true, alpha: 0.8 });
       }
       st.ps.update(dt);
       st.ps.render(ctx);
-      // lutadores
-      if (st.showFighters) {
-        const sa = VF.Skins[st.a], sb = VF.Skins[st.b];
-        const pa = VF.Poses.idle(t), pb = VF.Poses.idle(t + 0.7);
-        ctx.save();
-        BG.glow(ctx, 180, 520, 260, VF.getCharacter(st.a).color, 0.25);
-        BG.glow(ctx, 1100, 520, 260, VF.getCharacter(st.b).color, 0.25);
-        ctx.fillStyle = 'rgba(0,0,0,0.4)';
-        ctx.beginPath();
-        ctx.ellipse(180, 700, 90, 14, 0, 0, Math.PI * 2);
-        ctx.ellipse(1100, 700, 90, 14, 0, 0, Math.PI * 2);
-        ctx.fill();
-        VF.Rig.draw(ctx, sa, pa, { x: 180, y: 700, facing: 1, scale: 1.45, t, fighter: { state: 'idle' } });
-        VF.Rig.draw(ctx, sb, pb, { x: 1100, y: 700, facing: -1, scale: 1.45, t, fighter: { state: 'idle' } });
-        ctx.restore();
-      }
-      BG.vignette(ctx, 0.6);
+      BG.vignette(ctx, 0.55);
     }
   };
 })();

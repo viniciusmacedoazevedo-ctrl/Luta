@@ -93,6 +93,18 @@ VF.Audio = {
     }
   },
 
+  /* troca temporária de música (ULTIMATE); null volta para a anterior */
+  musicOverride(id) {
+    if (id) {
+      if (!this.baseMusic) this.baseMusic = this.musicId;
+      this.playMusic(id);
+    } else if (this.baseMusic) {
+      const b = this.baseMusic;
+      this.baseMusic = null;
+      this.playMusic(b);
+    }
+  },
+
   stopMusic() {
     VF.Music.stop();
     if (this.fileMusic) { this.fileMusic.pause(); this.fileMusic = null; }

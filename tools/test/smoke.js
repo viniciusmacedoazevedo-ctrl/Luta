@@ -1,7 +1,7 @@
 /* Teste automatizado (Playwright + Chromium):
    1) fluxo completo pelo menu até a luta, usando o teclado;
    2) partida CPU x CPU acelerada até a tela de vitória (todas as regras de round);
-   3) layout de celular (touch + paisagem) com controles na tela.
+   3) layout de celular (touch + paisagem): grade com toque duplo e 8 botões na tela.
    Uso: npm test   (screenshots em tools/test/screenshots) */
 const path = require('path');
 const fs = require('fs');
@@ -45,6 +45,13 @@ async function waitScene(p, name, ms) {
   }
   throw new Error(`cena "${name}" não apareceu (atual: ${await scene(p)})`);
 }
+async function waitFight(p) {
+  for (let i = 0; i < 150; i++) {
+    if ((await p.evaluate(() => VF.Game.scene && VF.Game.scene.phase)) === 'fight') return;
+    await sleep(100);
+  }
+  throw new Error('fase FIGHT! não começou');
+}
 const shot = (p, name) => p.screenshot({ path: path.join(OUT, name + '.png') });
 
 async function testMenuFlow(browser) {
@@ -58,7 +65,7 @@ async function testMenuFlow(browser) {
   await shot(p, '02-menu');
 
   // telas secundárias
-  for (const [btn, sc] of [['PERSONAGENS', 'characters'], ['CONFIGURAÇÕES', 'settings'], ['COMO JOGAR', 'howto']]) {
+  for (const [btn, sc] of [['CHARACTERS', 'characters'], ['SETTINGS', 'settings'], ['HOW TO PLAY', 'howto']]) {
     await p.click(`button:has-text("${btn}")`);
     await waitScene(p, sc);
     await sleep(700);
@@ -67,24 +74,32 @@ async function testMenuFlow(browser) {
     await waitScene(p, 'menu');
   }
 
-  await p.click('button:has-text("VAMOS LUTAR")');
+  await p.click('button:has-text("FIGHT")');
   await waitScene(p, 'mode');
   await shot(p, '04-mode');
   await p.click('button:has-text("CONTINUAR")');
   await waitScene(p, 'select');
   await sleep(500);
   await shot(p, '05-select');
-  await p.click('.card >> nth=0');
-  await sleep(400);
-  await shot(p, '06-select-ready');
-  await sleep(900);
-  await p.click('.card >> nth=3');
+  const nSq = await p.locator('.sq').count();
+  if (nSq !== 25) throw new Error('grade deveria ter 25 quadrados, tem ' + nSq);
+  // passar o mouse mostra o painel de informações
+  await p.hover('.sq >> nth=5');
+  await sleep(300);
+  const hovName = await p.evaluate(() => document.querySelector('.ip-name').textContent);
+  if (!hovName) throw new Error('painel de informações não apareceu no hover');
+  await shot(p, '06-select-hover');
+  await p.click('.sq >> nth=0');
+  await sleep(1300);
+  const t2 = await p.evaluate(() => document.querySelector('.sel-title, h1').textContent);
+  if (!/OPONENTE/.test(t2)) throw new Error('não mudou para ESCOLHA SEU OPONENTE: ' + t2);
+  await p.click('.sq >> nth=3');
   await waitScene(p, 'arena', 4000);
   await sleep(600);
   await shot(p, '07-arena');
   await p.click('.arena-card >> nth=0');
   await waitScene(p, 'fight');
-  await sleep(2300);
+  await waitFight(p);
 
   // golpes do jogador 1 pelo teclado
   const st = () => p.evaluate(() => { const f = VF.Game.scene.fighters[0]; return { state: f.state, x: Math.round(f.x), phase: VF.Game.scene.phase }; });
@@ -113,7 +128,20 @@ async function testMenuFlow(browser) {
   const sp = await p.evaluate(() => VF.Game.scene.fighters[0].state);
   await shot(p, '08-fight-special');
   if (sp !== 'special') throw new Error('especial não ativou (estado ' + sp + ')');
-  await sleep(1500);
+  for (let i = 0; i < 80 && (await st()).state !== 'idle'; i++) await sleep(50);
+  // ultimate: enche a barra e aperta I
+  for (let i = 0; i < 80 && (await p.evaluate(() => VF.Game.scene.fighters[1].state)) !== 'idle'; i++) await sleep(50);
+  // coloca o oponente perto (ultimates de avanço podem errar se ele estiver longe)
+  const hp1 = await p.evaluate(() => { const sc = VF.Game.scene; sc.fighters[1].x = sc.fighters[0].x + 160 * sc.fighters[0].facing; sc.fighters[0].ultimate = VF.CONFIG.ULTIMATE_MAX; sc.fighters[1].hp = VF.CONFIG.MAX_HP; return sc.fighters[1].hp; });
+  await p.keyboard.press('KeyI');
+  await sleep(300);
+  const ul = await p.evaluate(() => VF.Game.scene.fighters[0].state);
+  await shot(p, '08b-fight-ultimate');
+  if (ul !== 'ultimate') throw new Error('ultimate não ativou (estado ' + ul + ')');
+  for (let i = 0; i < 160 && (await st()).state === 'ultimate'; i++) await sleep(50);
+  const hp2 = await p.evaluate(() => VF.Game.scene.fighters[1].hp);
+  if (hp2 >= hp1) throw new Error('ultimate não causou dano');
+  await sleep(600);
   await shot(p, '09-fight');
   // pausa
   await p.keyboard.press('Escape');
@@ -122,7 +150,7 @@ async function testMenuFlow(browser) {
   await shot(p, '10-pause');
   await p.keyboard.press('Escape');
   await p.context().close();
-  console.log('✔ fluxo de menus, movimento, ataques, pulo, especial e pausa');
+  console.log('✔ fluxo de menus, grade 25 + hover, movimento, ataques, pulo, especial, ultimate e pausa');
 }
 
 async function testDemoMatch(browser, chars, arena) {
@@ -169,22 +197,33 @@ async function testMobile(browser) {
   await waitScene(p, 'menu');
   await sleep(800);
   await shot(p, '20-mobile-menu');
-  await p.tap('button:has-text("VAMOS LUTAR")');
+  await p.tap('button:has-text("FIGHT")');
   await waitScene(p, 'mode');
   await p.tap('button:has-text("CONTINUAR")');
   await waitScene(p, 'select');
   await sleep(400);
   await shot(p, '21-mobile-select');
-  await p.tap('.card >> nth=1');
+  // 1º toque só mostra as informações; 2º toque seleciona
+  await p.tap('.sq >> nth=1');
+  await sleep(400);
+  const picked1 = await p.evaluate(() => VF.Game.scene.picks[0]);
+  if (picked1) throw new Error('1º toque já selecionou (deveria só mostrar infos)');
+  await shot(p, '21b-mobile-info');
+  await p.tap('.sq >> nth=1');
   await sleep(1300);
-  await p.tap('.card >> nth=4');
+  if (!(await p.evaluate(() => VF.Game.scene.picks[0]))) throw new Error('2º toque não selecionou');
+  await p.tap('.sq >> nth=4');
+  await sleep(300);
+  await p.tap('.sq >> nth=4');
   await waitScene(p, 'arena', 4000);
   await shot(p, '22-mobile-arena');
   await p.tap('.arena-card >> nth=2');
   await waitScene(p, 'fight');
-  await sleep(2300);
+  await waitFight(p);
   const vis = await p.evaluate(() => document.getElementById('touch').classList.contains('show'));
   if (!vis) throw new Error('controles touch não apareceram no celular');
+  const nBtn = await p.locator('.tc-btn').count();
+  if (nBtn !== 8) throw new Error('esperava 8 botões touch, há ' + nBtn);
   // toca no botão SOCO e confere o ataque
   const box = await p.locator('.tc-punch').boundingBox();
   await p.touchscreen.tap(box.x + box.width / 2, box.y + box.height / 2);
@@ -225,7 +264,8 @@ async function launch() {
   try {
     await testMenuFlow(browser);
     await testMobile(browser);
-    const combos = [['vini,arthur', 'rua'], ['juexu,lula', 'urbana'], ['bolsonaro,vini', 'praca'], ['lula,bolsonaro', 'futurista']];
+    const combos = [['vini,arthur', 'rua'], ['julia_eduarda,lula', 'escola'], ['bolsonaro,xandao', 'campo'],
+      ['einstein,lutu', 'igreja'], ['leidiane,wal', 'urbana'], ['muskito,docinho', 'futurista'], ['anny,giovana', 'praca']];
     for (const [c, a] of combos) await testDemoMatch(browser, c, a);
   } catch (e) {
     ok = false;

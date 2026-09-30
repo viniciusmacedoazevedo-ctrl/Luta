@@ -7,7 +7,8 @@
     }
 
     spawn(p) {
-      if (this.list.length >= this.max) this.list.shift();
+      const max = Math.min(this.max, (VF.Quality && VF.Quality.maxParticles) || this.max);
+      if (this.list.length >= max) this.list.shift();
       p.age = 0;
       p.life = p.life || 0.5;
       p.vx = p.vx || 0;

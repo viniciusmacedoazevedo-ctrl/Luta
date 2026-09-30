@@ -1,58 +1,80 @@
-# 🥊 VINI FIGHT
+# 🥊 VINI FIGHT 2
 
-Jogo de luta 2D completo, cartunesco e **jogável no PC e no celular**, inspirado nos clássicos
-(Street Fighter / Mortal Kombat) mas com identidade visual própria.
+Jogo de luta 2D completo, cartunesco e **jogável no PC e no celular**, com **25 lutadores**,
+combos elaborados, **SPECIAL** e **ULTIMATE** cinematográfica para cada um.
 
-> ⚠️ **Aviso:** jogo fictício e humorístico. **Lula** e **Jair Bolsonaro** aparecem como
-> **caricaturas/paródias** de videogame. Nenhum poder, habilidade ou comportamento do jogo
-> representa fatos sobre pessoas reais.
+> ⚠️ **Aviso:** jogo fictício e humorístico. **Lula**, **Jair Bolsonaro**, **Xandao** e
+> **Albert Einstein** aparecem como **caricaturas/paródias** de videogame. Nenhum poder,
+> habilidade ou comportamento do jogo representa fatos sobre pessoas reais.
 
 ---
 
 ## ▶️ Como iniciar (o jeito mais rápido)
 
-**Abra o arquivo `index.html`** com dois cliques (Chrome, Edge ou Firefox). Pronto: o jogo abre
-direto, sem instalar nada.
-
-Para testar no celular, ou para instalar o jogo como app, use o servidor local (abaixo).
+**Abra o arquivo `index.html`** com dois cliques (Chrome, Edge ou Firefox). O jogo abre direto,
+sem instalar nada. Para testar no celular, use o servidor local (`npm start`, veja abaixo).
 
 ---
 
 ## 🎮 O que tem no jogo
 
-- **Menu animado**: logo com animação, partículas, música e sons nos botões
-  (VAMOS LUTAR, PERSONAGENS, CONFIGURAÇÕES, COMO JOGAR, SAIR).
-- **5 lutadores**, todos desenhados e animados por código (parado, andar, correr, pular, soco,
-  chute, forte, defesa, dano, especial, vitória e derrota):
+- **Menu principal** sobre uma arena animada (câmera passeando, lutadores ao fundo):
+  **FIGHT, CHARACTERS, HOW TO PLAY, SETTINGS, EXIT**.
+- **VERSUS**: PLAYER VS AI (EASY / NORMAL / HARD) e PLAYER VS PLAYER (mesmo teclado).
+- **Seleção em grade**: só os retratos em quadrados.
+  - **PC:** passar o mouse mostra o painel (nome, retrato grande, descrição, estilo, barras de
+    força/velocidade/defesa, SPECIAL e ULTIMATE); clicar seleciona.
+  - **Celular:** 1º toque mostra as informações, 2º toque no mesmo quadrado seleciona.
+  - Depois: **ESCOLHA SEU OPONENTE** e a arena.
+- **25 lutadores**, cada um com visual, pose, golpes, SPECIAL e ULTIMATE próprios:
 
-| Lutador | Estilo | Especial |
-|---|---|---|
-| **VINI** | Equilibrado | 👓 **VINI BLAST** – rajada de energia dos óculos |
-| **ARTHUR** | Velocidade extrema, combos | ⚡ **FLASH ARTHUR** – teleporta para as costas e ataca em sequência |
-| **JUEXU** | Equilibrada, bom alcance, ataque aéreo | 🔮 **ENERGIA SOMBRIA** – aura roxa + esfera sombria |
-| **LULA** *(paródia)* | Lento, dano altíssimo, agarrão | 🫳 **MÃO LEVE** – "pega emprestada" a barra SPECIAL do rival (mecânica cômica) |
-| **BOLSONARO** *(paródia)* | Defesa alta, golpes fortes | 📣 **DISCURSO DE PODER** – discurso + onda de choque que empurra |
+| Lutador | Estilo | SPECIAL | ULTIMATE |
+|---|---|---|---|
+| **VINI** | Equilibrado | 👓 VINI BLAST | 🔥 VINI FINAL BLAST |
+| **ARTHUR** | Velocidade extrema • combos rápidos | ⚡ FLASH ARTHUR | 🔥 FLASH COMBO |
+| **JULIA EDUARDA** | Energia sombria • médio alcance | 🔮 SHADOW BURST | 🔥 SHADOW STORM |
+| **LULA** *(paródia)* | Lento • golpes pesados • agarrão | 🫳 MÃO LEVE | 🔥 LADRÃO DE ENERGIA |
+| **BOLSONARO** *(paródia)* | Defesa alta • força alta | 📣 DISCURSO DE PODER | 🔥 DISCURSO FINAL |
+| **XANDAO** *(paródia)* | Defesa • controle • precisão | ⚖️ ORDEM JUDICIAL | 🔥 DECISÃO FINAL |
+| **WILL** | Fluido • elegante | 🌈 FASHION STORM | 🔥 GRAND STYLE |
+| **DEYVERSON** | Equilibrado • projétil que volta | 👱 PERUCA SUPREMA | 🔥 PERUCA INFINITA |
+| **WAL** | Controle de área | 🌪️ TORNADO ROXO | 🔥 MEGA TORNADO |
+| **DG** | Rápido • chutes acrobáticos | ⚽ CHUTE FANTÁSTICO | 🔥 CRAQUE DO COMBO |
+| **GABRIEL MORAIS** | Equilibrado • avanço rápido | 💨 MORAIS RUSH | 🔥 MORAIS FINAL |
+| **MUSKITO** | Técnico • tecnologia | 💻 NERD MODE | 🔥 SUPER COMPUTADOR |
+| **DOCINHO** | Equilibrado • área de luz | 🙌 BENÇÃO SUPREMA | 🔥 CHUVA DE BENÇÃOS |
+| **LIVIA** | Rápida • agressiva | 💢 LIVIA ATTACK | 🔥 LIVIA RUSH |
+| **LAURA** | Distância • ataques do céu | ⚡ RAIO DA FÉ | 🔥 LUZ SUPREMA |
+| **ANNY** | Força física alta | 💪 ACADEMIA MODE | 🔥 LEG DAY |
+| **JULIA NEGREIROS** | Precisão • atordoamento | 😏 OLHAR DE JULIA | 🔥 JULIA FINAL |
+| **ALLANE** | Giros • área próxima | 🌀 CURLY STORM | 🔥 CURLY CHAOS |
+| **BIA** | Longo alcance • precisão | 🏹 LONG RANGE | 🔥 MAX RANGE |
+| **ALBERT EINSTEIN** *(paródia)* | Controle do tempo • atrapalhado | ⏱️ RELATIVIDADE | 🔥 E = MC² |
+| **JOVANIRA** | Técnica • matemática | ➗ EQUAÇÃO IMPOSSÍVEL | 🔥 MATEMÁTICA FINAL |
+| **GIOVANA GOBI** | Equilibrada • combos cômicos | 💔 EX ATTACK | 🔥 EX COMBO |
+| **ELENA** | Ondas sonoras • distância | 🎤 VOZ DIVINA | 🔥 GRANDE CORAL |
+| **LUTU** | Dupla • ataques sincronizados | 💑 ATAQUE DO CASAL | 🔥 LUTU COMBO |
+| **LEIDIANE** | Charme • combos rápidos | 🌹 CHARME SUPREMO | 🔥 LEIDIANE FINAL |
 
-- **Seleção**: "ESCOLHA SEU LUTADOR" → "ESCOLHA SEU OPONENTE", com cards (rosto animado, nome,
-  barras de força/velocidade/defesa, descrição e ícone do especial) e o carimbo **READY!**.
-- **4 arenas animadas**, cada uma com música própria: Rua brasileira à noite, Arena urbana,
-  Praça brasileira e Arena futurista.
-- **Regras**: 2 rounds de **60 segundos**. Quem ganhar os 2 vence na hora; se ficar **1 x 1**,
-  acontece o **FINAL ROUND**. Com o tempo zerado vence quem tem mais vida. Se as vidas empatarem,
-  há animação de **EMPATE** e desempate por: mais dano → maior combo → mais golpes → cara ou coroa.
-- **Combos** com contador na tela (x3, x5, x10…), efeitos e sons diferentes por nível.
-- **Barra SPECIAL** que enche ao atacar, apanhar e fazer combos. Cheia, ela brilha e o poder fica
-  liberado, com animação de corte (*super flash*).
-- **IA** com 3 dificuldades (FÁCIL, NORMAL, DIFÍCIL): anda, ataca, defende, pula, faz combos,
-  esquiva de projéteis e usa os poderes (no difícil, de forma mais agressiva e inteligente).
-- **Tela de vitória** com o vencedor comemorando, confete e estatísticas
-  (rounds vencidos, combo máximo, dano causado, golpes, especiais), além de
-  JOGAR NOVAMENTE / ESCOLHER PERSONAGEM / MENU.
-- **Efeitos**: faíscas de impacto, partículas, flash, poeira, energia, *hit-stop*, câmera lenta
-  no K.O. e tremor de tela nos golpes fortes.
-- **Áudio**: músicas e efeitos sintetizados (funcionam sem arquivos), já preparados para
-  receber arquivos reais (veja `assets/audio/README.md`). Locutor por voz opcional.
-- **Modos**: 1 jogador x CPU e 2 jogadores no mesmo teclado. Pausa com **Esc**/**P**.
+- **Combos**: leve, médio (chute), pesado, baixo, rasteira, para frente (arremessa na parede),
+  para trás (lançador), aéreo, aéreo pesado (bate no chão e quica), agarrão, dash, defesa,
+  cancelamentos (golpe → golpe, dash cancel, jump cancel, cancel em SPECIAL/ULTIMATE),
+  *juggle* com limite e escalonamento de dano. Contador x3, x5, x8, x10… com efeitos crescentes.
+- **Barra SPECIAL** (enche rápido) e **barra ULTIMATE** (enche devagar). A ULTIMATE dá zoom,
+  escurece o fundo, troca a música, mostra **ULTIMATE!** e faz uma sequência cinematográfica
+  com impacto final. Algumas avançam e podem errar; outras pegam a arena inteira.
+- **Rounds**: ROUND 1 → 3 → 2 → 1 → **FIGHT!**, 60 segundos; se ficar 1 x 1, **FINAL ROUND**.
+  Empate de vida é decidido por dano → maior combo → golpes → cara ou coroa.
+- **HUD**: vida, SPECIAL e ULTIMATE de cada jogador, tempo, rounds e combos.
+- **7 arenas animadas**: Rua brasileira, Escola, Campo de futebol, Igreja (estilizada),
+  Arena urbana, Arena futurista e Praça — cada uma com música própria.
+- **Câmera dinâmica**: segue os lutadores, zoom nos golpes fortes, foco na ULTIMATE, tremor.
+- **IA** com EASY/NORMAL/HARD e comportamento próprio por personagem (zoner, rushdown,
+  agarrador…): anda, defende, pula, faz combos, esquiva e usa SPECIAL/ULTIMATE.
+- **Áudio** sintetizado (funciona sem arquivos) e pronto para receber arquivos reais
+  (`assets/audio/README.md`).
+- **Desempenho**: qualidade AUTO/ALTA/BAIXA em SETTINGS (limita partículas e efeitos em
+  aparelhos fracos).
 
 ---
 
@@ -60,29 +82,30 @@ Para testar no celular, ou para instalar o jogo como app, use o servidor local (
 
 | Ação | Jogador 1 | Jogador 2 |
 |---|---|---|
-| Esquerda / Direita | A / D | ← / → |
+| Andar | A / D | ← / → |
 | Pular | W | ↑ |
-| Defesa | S | ↓ |
-| Soco | J | 1 |
-| Chute | K | 2 |
-| Ataque forte | L | 3 |
-| Poder especial | U | 4 |
+| Defesa / baixo | S | ↓ |
+| Ataque leve | J | 1 |
+| Chute (médio) | K | 2 |
+| Ataque pesado | L | 3 |
+| SPECIAL | U | 4 |
+| ULTIMATE | I | 5 |
+| Agarrão | O | 6 |
 
-- **Dash/corrida**: toque duas vezes rápido na direção.
-- **Ataque aéreo**: ataque durante o pulo.
-- No modo 1 jogador, as teclas do Jogador 2 também controlam o seu lutador.
-- **Todas as teclas podem ser trocadas em CONFIGURAÇÕES** (ficam salvas).
+- **↓ + leve/chute** = ataque baixo • **↓ + pesado** = rasteira
+- **→ + pesado** = ataque para frente (quica na parede) • **← + ataque** = lançador
+- **No ar**: leve/chute = aéreo • pesado = aéreo pesado (bate no chão)
+- **Dash**: toque duas vezes na direção • Pausa: **Esc** / **P**
+- **Todas as teclas podem ser trocadas em SETTINGS** (ficam salvas).
 
 ## 📱 Controles no celular
 
-O jogo **detecta sozinho** se está no PC ou em celular/tablet e troca os controles.
+O jogo detecta sozinho se está no PC ou no celular.
 
-- **Esquerda:** joystick virtual (arrastar = andar • para cima = pular • para baixo = defender •
-  toque duplo para o lado = dash).
-- **Direita:** botões grandes **SOCO, CHUTE, FORTE, DEFESA, PULO e ESPECIAL** (brilha quando
-  estiver cheio).
-- Jogue **na horizontal**. Na vertical aparece o aviso para girar o aparelho.
-- Dá para forçar "touch sempre/nunca" em CONFIGURAÇÕES.
+- **Esquerda:** joystick (↑ pula, ↓ baixo/defesa, toque duplo = dash, ← + golpe = lançador).
+- **Direita — 8 botões:** PUNCH, KICK, HEAVY, BLOCK, JUMP, GRAB, **SPECIAL** e **ULTIMATE**
+  (os dois brilham quando a barra está cheia).
+- Jogue **na horizontal** (na vertical aparece o aviso para girar).
 
 ---
 
@@ -179,52 +202,51 @@ npm test
 
 O teste abre o jogo num navegador real e verifica:
 
-- navegação pelos menus;
-- movimento, ataques, pulo, especial e pausa pelo teclado;
-- layout de celular (touch, botões, joystick, aviso de retrato);
-- 4 partidas completas **CPU x CPU** (uma por arena) até a tela de vitória,
-  passando por K.O., tempo, FINAL ROUND e especiais.
+- menu (FIGHT, CHARACTERS, HOW TO PLAY, SETTINGS), VERSUS, grade com 25 quadrados,
+  painel no *hover*, ESCOLHA SEU OPONENTE e as 7 arenas;
+- movimento, ataques, pulo, SPECIAL, ULTIMATE (com dano) e pausa pelo teclado;
+- celular: 1º toque mostra infos / 2º seleciona, 8 botões touch, aviso de retrato;
+- 7 partidas completas **CPU x CPU** (uma por arena) até a tela de vitória.
 
-Screenshots ficam em `tools/test/screenshots/`.
+Screenshots ficam em `tools/test/screenshots/`. Galeria de todos os lutadores:
+`tools/test/sprites.html`.
 
-**Modo demonstração:** abra `index.html?demo=vini,lula,praca&diff=hard` para assistir
-CPU x CPU (adicione `&speed=4` para acelerar).
+**Modo demonstração:** `index.html?demo=vini,lula,praca&diff=hard` (adicione `&speed=4`).
 
 ---
 
-## 🗂️ Estrutura do projeto
+## 🗂️ Onde fica cada coisa
+
+| Quero mudar… | Arquivo |
+|---|---|
+| **Um personagem** (nome, cores, visual, atributos, golpes, textos, SPECIAL/ULTIMATE escolhidos) | `assets/characters/<id>/character.js` |
+| **Lista/ordem dos personagens** | `config/roster.js` + `<script>` em `index.html` |
+| **Retratos** (desenhados por código a partir do visual) | `assets/characters/_shared/appearance.js` e `VF.Rig.portrait` em `assets/characters/_shared/rig.js` |
+| **Animações / poses** (parado, andar, golpes, vitória…) | `assets/characters/_shared/poses.js` |
+| **Golpes, combos e cancelamentos** (dano, alcance, `next`) | `config/movesets.js` |
+| **SPECIALs** (os 25 tipos) | `scripts/specials.js` (+ visual em `assets/effects/projectile-fx.js`) |
+| **ULTIMATEs** (sequência cinematográfica) | `scripts/ultimates.js` + `assets/effects/bigfx.js` |
+| **Controles do teclado** | `config/controls.js` (ou SETTINGS no jogo) |
+| **Controles touch** | `ui/touch-controls.js` |
+| **Regras** (tempo, vida, barras) | `config/game.js` |
+| **Arenas** | `config/arenas.js` + `assets/backgrounds/*.js` |
+| **IA** | `scripts/ai.js` |
+| **Câmera** | `scripts/camera.js` |
+| **Sons e músicas** | `config/audio.js`, `assets/audio/` |
 
 ```
 index.html              ← ARQUIVO PRINCIPAL (abra este)
-config/                 ← balanceamento e dados
-  game.js               regras globais (tempo do round, vida, dificuldade da IA…)
-  characters.js         atributos, golpes, hitboxes e especiais dos 5 lutadores
-  arenas.js             lista de arenas
-  controls.js           teclas padrão
-  audio.js              manifesto de áudio (trocar placeholders por arquivos)
-src/
-  main.js               inicialização
-  game.js               loop de passo fixo + gerenciador de cenas
-  core/                 entrada (teclado), áudio, detecção de dispositivo, storage, matemática
-scripts/                ← sistemas de jogo
-  fighter.js            máquina de estados do lutador, física, defesa, dano
-  combat.js             acertos, combos, colisão de corpos, projéteis
-  specials.js           lógica + animação dos 5 poderes especiais
-  ai.js                 inteligência artificial (3 dificuldades)
-  match.js              regras de rounds / desempate
-  projectile.js, puppet.js
-scenes/                 ← telas: title, menu, mode, select, arena, fight, victory,
-                          characters, settings, howto, exit
-ui/                     ← HUD, locutor, controles touch, helpers de DOM, styles.css
-assets/
-  characters/           rig procedural + visual de cada personagem
-  backgrounds/          as 4 arenas + fundo do menu
-  effects/              partículas, faíscas, visual dos projéteis
-  audio/                sons e músicas sintetizados (+ pastas para arquivos reais)
-  icons/                ícones do app
-electron/               ← empacotamento Windows (Electron)
-android/                ← projeto Android (Capacitor)
-tools/                  ← servidor local, build, testes
+config/                 game.js, controls.js, movesets.js, roster.js, arenas.js, audio.js
+src/                    main.js, game.js (loop + cenas), core/ (input, áudio, storage…)
+scripts/                fighter, combat, camera, specials, ultimates, projectile, ai, match, puppet
+scenes/                 title, menu, mode, select, arena, fight, victory, characters, settings, howto, exit
+ui/                     hud, announcer, touch-controls, roster-grid, dom, styles.css
+assets/characters/      _shared/ (rig, appearance, poses) + uma pasta por lutador
+assets/backgrounds/     7 arenas + fundo do menu
+assets/effects/         partículas, efeitos, projéteis, bigfx (ultimates)
+assets/audio/           sons e músicas sintetizados
+electron/  android/     empacotamento Windows e Android
+tools/                  servidor local, builds, testes
 ```
 
 ### Tecnologia
@@ -236,4 +258,4 @@ tools/                  ← servidor local, build, testes
 - **Electron** gera o `.exe` para Windows e **Capacitor** gera o `.apk` para Android
   a partir do mesmo código;
 - o código é dividido por sistemas e fácil de modificar (ex.: para mudar a duração do round,
-  edite `ROUND_TIME` em `config/game.js`; para balancear um personagem, `config/characters.js`).
+  edite `ROUND_TIME` em `config/game.js`; para balancear um personagem, `assets/characters/<id>/character.js`).

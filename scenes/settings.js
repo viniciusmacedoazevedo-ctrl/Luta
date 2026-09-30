@@ -3,7 +3,7 @@ VF.Game.register('settings', {
   enter() {
     const s = VF.UI.screen('settings-screen');
     this.s = s;
-    s.innerHTML = `<h1 class="title">CONFIGURAÇÕES</h1><div class="panel settings-panel"></div><div class="row-buttons"></div>`;
+    s.innerHTML = `<h1 class="title">SETTINGS</h1><div class="panel settings-panel"></div><div class="row-buttons"></div>`;
     const row = s.querySelector('.row-buttons');
     VF.UI.button('◀ VOLTAR', () => VF.Game.go('menu'), 'back', row);
     VF.UI.button('↺ RESTAURAR PADRÕES', () => {
@@ -30,6 +30,7 @@ VF.Game.register('settings', {
       <h2>🎮 JOGO</h2>
       <div class="set-row"><label>Dificuldade da CPU</label>${chipRow('difficulty', Object.keys(VF.DIFFICULTY).map((k) => [k, VF.DIFFICULTY[k].label]))}</div>
       <div class="set-row"><label>Tremor de tela</label>${chipRow('shake', [[true, 'LIGADO'], [false, 'DESLIGADO']])}</div>
+      <div class="set-row"><label>Qualidade gráfica</label>${chipRow('quality', [['auto', 'AUTOMÁTICA'], ['high', 'ALTA'], ['low', 'LEVE (PC/celular fraco)']])}</div>
       <div class="set-row"><label>Mostrar FPS</label>${chipRow('showFps', [[true, 'SIM'], [false, 'NÃO']])}</div>
       <div class="set-row"><label>Controles touch</label>${chipRow('touch', [['auto', 'AUTOMÁTICO'], ['on', 'SEMPRE'], ['off', 'NUNCA']])}</div>
       <h2>⌨️ TECLADO <small>(clique e pressione a nova tecla • Esc cancela)</small></h2>

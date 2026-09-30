@@ -15,6 +15,10 @@ VF.AUDIO_FILES = {
     urbana: null,
     praca: null,
     futurista: null,
+    escola: null,
+    campo: null,
+    igreja: null,
+    ultimate: null,
     victory: null
   },
   sfx: {
@@ -22,6 +26,9 @@ VF.AUDIO_FILES = {
     punch: null, kick: null, heavy: null, grab: null, block: null, whoosh: null,
     jump: null, land: null, dash: null, ko: null, combo: null, round: null,
     fight: null, tick: null, draw: null, victory: null, charge: null,
-    blast: null, flash: null, dark: null, steal: null, speech: null, wave: null
+    blast: null, flash: null, dark: null, steal: null, speech: null, wave: null,
+    launch: null, boom: null, gavel: null, zap: null, spin: null, wind: null, kickball: null,
+    digital: null, bell: null, flex: null, sparkle: null, clock: null, heartbreak: null,
+    sing: null, countdown: null, ultimate: null
   }
 };

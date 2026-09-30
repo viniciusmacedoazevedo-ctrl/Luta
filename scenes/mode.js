@@ -6,9 +6,9 @@ VF.Game.register('mode', {
     if (VF.Device.touch) S.mode = 'cpu';
     else if (S.mode === 'demo') S.mode = 'cpu';
     const s = VF.UI.screen('mode-screen');
-    s.innerHTML = `<h1 class="title">MODO DE JOGO</h1>
+    s.innerHTML = `<h1 class="title">VERSUS</h1>
       <div class="mode-cards"></div>
-      <div class="diff-box"><div class="label">DIFICULDADE DA CPU</div><div class="chips"></div></div>
+      <div class="diff-box"><div class="label">DIFICULDADE DA IA</div><div class="chips"></div></div>
       <div class="row-buttons"></div>`;
     const cards = s.querySelector('.mode-cards');
     const mk = (mode, icon, title, sub, disabled) => {
@@ -18,8 +18,8 @@ VF.Game.register('mode', {
       if (disabled) { b.disabled = true; b.classList.add('disabled'); }
       return b;
     };
-    mk('cpu', '🤖', '1 JOGADOR', 'Você contra a CPU');
-    mk('pvp', '🎮', '2 JOGADORES', VF.Device.touch ? 'Disponível no PC (mesmo teclado)' : 'Os dois no mesmo teclado', VF.Device.touch);
+    mk('cpu', '🤖', 'PLAYER VS AI', 'Você contra a CPU');
+    mk('pvp', '🎮', 'PLAYER VS PLAYER', VF.Device.touch ? 'Disponível no PC (mesmo teclado)' : 'Os dois no mesmo teclado', VF.Device.touch);
     const chips = s.querySelector('.chips');
     for (const k of Object.keys(VF.DIFFICULTY)) {
       const c = VF.UI.button(VF.DIFFICULTY[k].label, () => {

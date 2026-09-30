@@ -6,7 +6,7 @@
     hitSpark(ps, x, y, dir, power, color) {
       power = power || 1;
       color = color || '#ffe25a';
-      const n = Math.round(10 * power);
+      const n = Math.round(10 * power * ((VF.Quality && VF.Quality.particles) || 1));
       for (let i = 0; i < n; i++) {
         const a = R(-1.1, 1.1) + (dir > 0 ? 0 : Math.PI);
         const sp = R(400, 1000) * (0.7 + power * 0.3);
@@ -79,6 +79,13 @@
       const cols = ['#ff3d71', '#ffd600', '#00e5ff', '#76ff03', '#b36bff', '#ff9100'];
       for (let i = 0; i < (n || 80); i++) {
         ps.spawn({ x: R(0, w), y: R(-200, -10), vx: R(-60, 60), vy: R(80, 260), g: 60, life: R(2.5, 4.5), size: R(4, 8), color: cols[i % cols.length], shape: 'rect', rot: R(0, 6), spin: R(-8, 8), fade: false });
+      }
+    },
+
+    speedLines(ps, x, y, dir, color) {
+      const n = Math.max(1, Math.round(3 * ((VF.Quality && VF.Quality.particles) || 1)));
+      for (let i = 0; i < n; i++) {
+        ps.spawn({ x: x + R(-30, 30), y: y + R(-90, 90), vx: dir * R(900, 1500), vy: 0, life: R(0.12, 0.22), size: R(2, 3.5), color: i % 2 ? '#ffffff' : color || '#ffffff', shape: 'spark', add: true });
       }
     },
 

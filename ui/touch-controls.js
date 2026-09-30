@@ -37,20 +37,23 @@
       this.el.innerHTML = `
         <div class="tc-zone">
           <div class="tc-base"><div class="tc-knob"></div></div>
-          <div class="tc-hint">MOVER • PULAR ↑ • DEFENDER ↓<br>toque duplo ← → = DASH</div>
+          <div class="tc-hint">MOVER • ↑ PULAR • ↓ BAIXO/DEFESA<br>toque duplo ← → = DASH • ← + golpe = LANÇADOR</div>
         </div>
         <div class="tc-pad">
-          <button class="tc-btn tc-def" data-act="down"><b>🛡️</b><span>DEFESA</span></button>
-          <button class="tc-btn tc-jump" data-act="up"><b>⬆️</b><span>PULO</span></button>
-          <button class="tc-btn tc-sp" data-act="special"><b>⚡</b><span>ESPECIAL</span></button>
-          <button class="tc-btn tc-punch" data-act="punch"><b>👊</b><span>SOCO</span></button>
-          <button class="tc-btn tc-kick" data-act="kick"><b>🦶</b><span>CHUTE</span></button>
-          <button class="tc-btn tc-heavy" data-act="heavy"><b>💥</b><span>FORTE</span></button>
+          <button class="tc-btn tc-def" data-act="down"><b>🛡️</b><span>BLOCK</span></button>
+          <button class="tc-btn tc-jump" data-act="up"><b>⬆️</b><span>JUMP</span></button>
+          <button class="tc-btn tc-grab" data-act="grab"><b>✊</b><span>GRAB</span></button>
+          <button class="tc-btn tc-ult" data-act="ultimate"><b>🔥</b><span>ULTIMATE</span></button>
+          <button class="tc-btn tc-punch" data-act="punch"><b>👊</b><span>PUNCH</span></button>
+          <button class="tc-btn tc-kick" data-act="kick"><b>🦶</b><span>KICK</span></button>
+          <button class="tc-btn tc-heavy" data-act="heavy"><b>💥</b><span>HEAVY</span></button>
+          <button class="tc-btn tc-sp" data-act="special"><b>⚡</b><span>SPECIAL</span></button>
         </div>`;
       this.zone = this.el.querySelector('.tc-zone');
       this.base = this.el.querySelector('.tc-base');
       this.knob = this.el.querySelector('.tc-knob');
       this.spBtn = this.el.querySelector('.tc-sp');
+      this.ultBtn = this.el.querySelector('.tc-ult');
       this.bindJoystick();
       this.bindButtons();
     },
@@ -128,8 +131,9 @@
       if (!this.visible) this.source.reset();
     },
 
-    setSpecialReady(ready) {
-      if (this.spBtn) this.spBtn.classList.toggle('ready', !!ready);
+    setSpecialReady(ready, ult) {
+      if (this.spBtn && this.spBtn.classList.contains('ready') !== !!ready) this.spBtn.classList.toggle('ready', !!ready);
+      if (this.ultBtn && this.ultBtn.classList.contains('ready') !== !!ult) this.ultBtn.classList.toggle('ready', !!ult);
     }
   };
 })();

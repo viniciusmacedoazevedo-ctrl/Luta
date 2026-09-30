@@ -24,6 +24,7 @@ VF.Settings = {
       shake: true,
       showFps: false,
       touch: 'auto', // auto | on | off
+      quality: 'auto', // auto | high | low
       bindings: JSON.parse(JSON.stringify(VF.DEFAULT_BINDINGS))
     };
   },
@@ -39,6 +40,18 @@ VF.Settings = {
     this.data = data;
     return data;
   },
-  save() { VF.Storage.set('settings', this.data); },
+  save() { VF.Storage.set('settings', this.data); VF.applyQuality(); },
   reset() { this.data = this.defaults(); this.save(); }
+};
+
+/* Qualidade gráfica (performance em PCs e celulares mais fracos) */
+VF.Quality = { particles: 1, afterimages: true, textPops: true, cel: true, maxParticles: 900 };
+VF.applyQuality = function () {
+  const q = (VF.Settings.data && VF.Settings.data.quality) || 'auto';
+  const weak = (navigator.hardwareConcurrency || 4) <= 4 || (VF.Device && VF.Device.mobileUA);
+  const low = q === 'low' || (q === 'auto' && weak);
+  Object.assign(VF.Quality, low
+    ? { particles: 0.45, afterimages: false, textPops: false, cel: false, maxParticles: 350, low: true }
+    : { particles: 1, afterimages: true, textPops: true, cel: true, maxParticles: 900, low: false });
+  if (VF.Rig) VF.Rig.cel = VF.Quality.cel;
 };

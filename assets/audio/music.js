@@ -43,6 +43,35 @@
       arp: { every: 1, pattern: [0, 1, 2, 3, 2, 1, 0, 2, 0, 1, 2, 3, 3, 2, 1, 0], oct: 24, wave: 'sawtooth', vol: 0.03 },
       pad: 0.035, delay: true
     },
+    escola: {
+      bpm: 126, prog: [48, 53, 43, 48], types: ['M', 'M', 'd', 'M'],
+      kick: 'x...x...x...x...', snare: '....x.......x...', hat: 'x.x.x.x.x.x.x.x.',
+      bass: [0, null, 7, null, 12, null, 7, null, 0, null, 7, null, 12, null, 10, null],
+      arp: { every: 2, pattern: [0, 1, 2, 1, 2, 3, 2, 1], oct: 24, wave: 'square', vol: 0.04 },
+      pad: 0.025
+    },
+    campo: {
+      bpm: 138, prog: [43, 48, 50, 43], types: ['M', 'M', 'm', 'M'],
+      kick: 'x..x..x.x..x..x.', snare: '....x..x....x..x', hat: 'xxxxxxxxxxxxxxxx',
+      perc: 'x.x.x..xx.x.x..x',
+      bass: [0, null, 0, null, 7, null, 0, 12, 0, null, 0, null, 7, null, 10, null],
+      arp: { every: 2, pattern: [0, 2, 1, 2, 3, 2, 1, 0], oct: 24, wave: 'sawtooth', vol: 0.03 },
+      pad: 0.03
+    },
+    igreja: {
+      bpm: 84, prog: [48, 45, 41, 43], types: ['M', 'm', 'M', 'M'],
+      kick: 'x.......x.......', snare: '........x.......', hat: '....x.......x...',
+      bass: [0, null, null, null, null, null, null, null, 7, null, null, null, null, null, null, null],
+      arp: { every: 2, pattern: [0, 1, 2, 3, 2, 1, 2, 3], oct: 24, wave: 'triangle', vol: 0.06 },
+      pad: 0.06, delay: true
+    },
+    ultimate: {
+      bpm: 160, prog: [45, 46, 45, 44], types: ['m', 'M', 'm', 'M'],
+      kick: 'x.x.x.x.x.x.x.x.', snare: '....x.......x.x.', hat: 'xxxxxxxxxxxxxxxx',
+      bass: [0, 0, 12, 0, 0, 12, 0, 12, 0, 0, 12, 0, 0, 12, 3, 12],
+      arp: { every: 1, pattern: [0, 1, 2, 3, 2, 1, 3, 2], oct: 24, wave: 'sawtooth', vol: 0.035 },
+      pad: 0.04
+    },
     victory: {
       bpm: 150, loop: false, length: 48, prog: [48, 53, 55, 48], types: ['M', 'M', 'M', 'M'],
       kick: 'x.......x.......', snare: '....x.......x...', hat: 'x.x.x.x.x.x.x.x.',

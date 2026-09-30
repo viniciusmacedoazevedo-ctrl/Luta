@@ -1,6 +1,6 @@
 /* Service worker: permite instalar o jogo no celular (PWA) e jogar offline.
    Estratégia: responde do cache e atualiza em segundo plano. */
-const CACHE = 'vinifight-v1';
+const CACHE = 'vinifight-v2';
 
 self.addEventListener('install', (e) => {
   self.skipWaiting();

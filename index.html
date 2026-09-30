@@ -7,7 +7,7 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="description" content="VINI FIGHT — jogo de luta 2D cartunesco para PC e celular (paródia fictícia).">
+  <meta name="description" content="VINI FIGHT — jogo de luta 2D com 25 lutadores, combos, especiais e ultimates. PC e celular.">
   <title>VINI FIGHT</title>
   <link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
@@ -33,7 +33,8 @@
   <script src="config/game.js"></script>
   <script src="config/controls.js"></script>
   <script src="config/audio.js"></script>
-  <script src="config/characters.js"></script>
+  <script src="config/movesets.js"></script>
+  <script src="config/roster.js"></script>
   <script src="config/arenas.js"></script>
   <!-- núcleo -->
   <script src="src/core/math.js"></script>
@@ -41,28 +42,58 @@
   <script src="src/core/device.js"></script>
   <script src="src/core/input.js"></script>
   <script src="src/core/audio.js"></script>
-  <!-- assets procedurais -->
+  <!-- áudio e efeitos -->
   <script src="assets/audio/synth.js"></script>
   <script src="assets/audio/music.js"></script>
   <script src="assets/effects/particles.js"></script>
   <script src="assets/effects/effects.js"></script>
+  <script src="assets/effects/bigfx.js"></script>
   <script src="assets/effects/projectile-fx.js"></script>
-  <script src="assets/characters/rig.js"></script>
-  <script src="assets/characters/poses.js"></script>
-  <script src="assets/characters/vini.js"></script>
-  <script src="assets/characters/arthur.js"></script>
-  <script src="assets/characters/juexu.js"></script>
-  <script src="assets/characters/lula.js"></script>
-  <script src="assets/characters/bolsonaro.js"></script>
+  <!-- rig, aparência e animações -->
+  <script src="assets/characters/_shared/rig.js"></script>
+  <script src="assets/characters/_shared/appearance.js"></script>
+  <script src="assets/characters/_shared/poses.js"></script>
+  <!-- personagens (um arquivo por pasta) -->
+  <script src="assets/characters/vini/character.js"></script>
+  <script src="assets/characters/arthur/character.js"></script>
+  <script src="assets/characters/julia_eduarda/character.js"></script>
+  <script src="assets/characters/lula/character.js"></script>
+  <script src="assets/characters/bolsonaro/character.js"></script>
+  <script src="assets/characters/xandao/character.js"></script>
+  <script src="assets/characters/will/character.js"></script>
+  <script src="assets/characters/deyverson/character.js"></script>
+  <script src="assets/characters/wal/character.js"></script>
+  <script src="assets/characters/dg/character.js"></script>
+  <script src="assets/characters/gabriel/character.js"></script>
+  <script src="assets/characters/muskito/character.js"></script>
+  <script src="assets/characters/docinho/character.js"></script>
+  <script src="assets/characters/livia/character.js"></script>
+  <script src="assets/characters/laura/character.js"></script>
+  <script src="assets/characters/anny/character.js"></script>
+  <script src="assets/characters/julia_negreiros/character.js"></script>
+  <script src="assets/characters/allane/character.js"></script>
+  <script src="assets/characters/bia/character.js"></script>
+  <script src="assets/characters/einstein/character.js"></script>
+  <script src="assets/characters/jovanira/character.js"></script>
+  <script src="assets/characters/giovana/character.js"></script>
+  <script src="assets/characters/elena/character.js"></script>
+  <script src="assets/characters/lutu/character.js"></script>
+  <script src="assets/characters/leidiane/character.js"></script>
+  <!-- cenários -->
   <script src="assets/backgrounds/common.js"></script>
   <script src="assets/backgrounds/menu-bg.js"></script>
   <script src="assets/backgrounds/rua-noite.js"></script>
+  <script src="assets/backgrounds/escola.js"></script>
+  <script src="assets/backgrounds/campo.js"></script>
+  <script src="assets/backgrounds/igreja.js"></script>
   <script src="assets/backgrounds/arena-urbana.js"></script>
-  <script src="assets/backgrounds/praca.js"></script>
   <script src="assets/backgrounds/futurista.js"></script>
+  <script src="assets/backgrounds/praca.js"></script>
   <!-- sistemas de jogo -->
   <script src="scripts/projectile.js"></script>
   <script src="scripts/specials.js"></script>
+  <script src="scripts/ultimates.js"></script>
+  <script src="scripts/camera.js"></script>
   <script src="scripts/fighter.js"></script>
   <script src="scripts/combat.js"></script>
   <script src="scripts/ai.js"></script>
@@ -73,6 +104,7 @@
   <script src="ui/hud.js"></script>
   <script src="ui/announcer.js"></script>
   <script src="ui/touch-controls.js"></script>
+  <script src="ui/roster-grid.js"></script>
   <!-- jogo + cenas -->
   <script src="src/game.js"></script>
   <script src="scenes/title.js"></script>

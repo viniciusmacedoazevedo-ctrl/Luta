@@ -518,3 +518,179 @@ body.is-touch.portrait #rotate { display: flex; }
   .vic-buttons .btn { font-size: 1.4rem; }
   .ci-name { font-size: 3rem; }
 }
+
+/* ======================================================================
+   VINI FIGHT v2 — nova identidade visual (sobrescreve o estilo anterior)
+   ====================================================================== */
+:root {
+  --gold: #ffd600;
+  --hot: #ff2d55;
+  --ink: #07030f;
+  --steel1: #2c2448;
+  --steel2: #120c24;
+}
+
+.btn {
+  clip-path: polygon(0.9rem 0, 100% 0, calc(100% - 0.9rem) 100%, 0 100%);
+  border: none;
+  border-radius: 0;
+  transform: none;
+  padding: 0.6rem 2.2rem;
+  background: linear-gradient(180deg, var(--steel1), var(--steel2));
+  box-shadow: inset 0 -0.3rem 0 rgba(0, 0, 0, 0.45), inset 0 0.15rem 0 rgba(255, 255, 255, 0.18);
+  letter-spacing: 0.1em;
+  text-shadow: 0 0.15rem 0 #000;
+}
+.btn:hover, .btn:focus, .btn:focus-visible {
+  transform: translateX(0.5rem) scale(1.04);
+  background: linear-gradient(90deg, var(--hot), #ff6d00);
+  box-shadow: inset 0 -0.3rem 0 rgba(0, 0, 0, 0.35), 0 0 1.4rem rgba(255, 45, 85, 0.6);
+}
+.btn:active { transform: translateX(0.5rem) scale(0.98); }
+.btn.primary { background: linear-gradient(90deg, #ffd600, #ff9100); color: var(--ink); text-shadow: none; }
+.btn.primary:hover, .btn.primary:focus { background: linear-gradient(90deg, #fff176, #ffab00); }
+.btn.danger { background: linear-gradient(180deg, #4a1022, #1e0710); }
+.btn.big { font-size: 2.8rem; padding: 0.7rem 3rem; }
+.mi { display: inline-block; width: 2.2rem; text-align: center; }
+
+.title {
+  transform: skew(-8deg);
+  letter-spacing: 0.12em;
+  background: linear-gradient(180deg, #fff 0%, #ffe57f 55%, #ff9100 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 0.1rem var(--ink);
+  filter: drop-shadow(0 0.3rem 0 var(--ink)) drop-shadow(0 0 1.2rem rgba(255, 45, 85, 0.6));
+  text-shadow: none;
+}
+
+.menu-screen { flex-direction: row; justify-content: space-between; padding-left: 7vw; padding-right: 7vw; }
+.menu-screen .logo { margin-top: 0; }
+.menu-buttons { min-width: 26rem; gap: 0.9rem; }
+.menu-buttons .btn { text-align: left; font-size: 2.2rem; }
+.menu-buttons .btn.big { font-size: 2.9rem; }
+.logo-vini, .logo-fight { font-size: 10rem; }
+
+/* ---------- grade de seleção ---------- */
+.select-screen, .chars-screen { justify-content: flex-start; gap: 0.5rem; padding-top: 0.8rem; flex-direction: column; align-items: stretch; }
+.sel-head { text-align: center; }
+.sel-sub { font-size: 1.2rem; color: #ffe57f; letter-spacing: 0.08em; }
+.sel-body { flex: 1; min-height: 0; display: flex; gap: 1.2rem; align-items: stretch; justify-content: center; }
+.sel-grid-wrap { display: flex; align-items: center; justify-content: center; }
+.roster-grid {
+  --sq: min(7.2vw, 15.5vh);
+  display: grid;
+  grid-template-columns: repeat(7, var(--sq));
+  grid-auto-rows: var(--sq);
+  gap: 0.5rem;
+  padding: 0.6rem;
+  background: linear-gradient(180deg, rgba(20, 12, 40, 0.85), rgba(8, 4, 18, 0.85));
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  clip-path: polygon(1.2rem 0, 100% 0, 100% calc(100% - 1.2rem), calc(100% - 1.2rem) 100%, 0 100%, 0 1.2rem);
+}
+.sq {
+  --c: #fff;
+  position: relative;
+  padding: 0;
+  border: 0.18rem solid rgba(255, 255, 255, 0.25);
+  background: #10081e;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+  touch-action: manipulation;
+  outline: none;
+}
+.sq canvas { width: 100%; height: 100%; display: block; }
+.sq.hover, .sq:hover, .sq:focus {
+  transform: scale(1.12);
+  z-index: 3;
+  border-color: #fff;
+  box-shadow: 0 0 0 0.2rem var(--c), 0 0 1.6rem var(--c);
+}
+.sq.picked { border-color: var(--gold); box-shadow: 0 0 0 0.25rem var(--gold), 0 0 2rem var(--gold); animation: sqPick 0.5s; }
+.sq.picked2 { border-color: var(--hot); box-shadow: 0 0 0 0.25rem var(--hot), 0 0 2rem var(--hot); animation: sqPick 0.5s; }
+@keyframes sqPick { 0% { transform: scale(1.4) rotate(-4deg); } 60% { transform: scale(1.05) rotate(2deg); } 100% { transform: scale(1.12); } }
+.sq-mark {
+  position: absolute; left: 0; top: 0;
+  font-family: var(--title); font-size: 1rem; letter-spacing: 0.05em;
+  background: var(--gold); color: var(--ink); padding: 0 0.35rem;
+}
+.sq-mark:empty { display: none; }
+.select-screen.flash::after { content: ''; position: absolute; inset: 0; background: rgba(255, 255, 255, 0.35); animation: fadeOut 0.35s forwards; pointer-events: none; }
+@keyframes fadeOut { to { opacity: 0; } }
+
+.sel-panel-wrap { width: min(34vw, 30rem); display: flex; }
+.info-panel {
+  --c: #fff;
+  flex: 1;
+  padding: 0.8rem 1rem;
+  display: flex; flex-direction: column; gap: 0.35rem;
+  overflow-y: auto;
+  border-radius: 0;
+  border: 2px solid var(--c);
+  box-shadow: 0 0 1.4rem color-mix(in srgb, var(--c) 45%, transparent);
+  clip-path: polygon(0 0, calc(100% - 1.2rem) 0, 100% 1.2rem, 100% 100%, 1.2rem 100%, 0 calc(100% - 1.2rem));
+  font-size: 0.95rem;
+}
+.info-panel.pop { animation: panelIn 0.25s ease-out; }
+@keyframes panelIn { from { transform: translateX(1.5rem); opacity: 0.3; } to { transform: none; opacity: 1; } }
+.ip-top { display: flex; gap: 0.7rem; align-items: center; }
+.ip-portrait { width: 9rem; height: 9rem; flex: none; border: 2px solid var(--c); background: rgba(0, 0, 0, 0.3); }
+.ip-name { font-family: var(--title); font-size: 2.3rem; line-height: 1; color: var(--c); -webkit-text-stroke: 0.06rem var(--ink); letter-spacing: 0.04em; }
+.ip-title { font-family: var(--title); font-size: 1.15rem; color: #fff; letter-spacing: 0.06em; }
+.ip-style { font-size: 0.85rem; color: var(--muted); }
+.ip-desc { font-style: italic; color: #f1e9ff; line-height: 1.25; }
+.ipb { display: grid; grid-template-columns: 6.5rem 1fr; align-items: center; font-weight: 800; font-size: 0.8rem; color: var(--muted); }
+.ipb code { font-size: 1rem; letter-spacing: -0.05em; font-family: monospace; }
+.ip-move { background: rgba(255, 255, 255, 0.05); padding: 0.35rem 0.55rem; border-left: 0.25rem solid var(--c); }
+.ip-move b { font-family: var(--title); font-weight: normal; font-size: 1.25rem; letter-spacing: 0.04em; color: var(--gold); margin-left: 0.4rem; }
+.ip-move p { margin: 0.15rem 0 0; font-size: 0.82rem; line-height: 1.25; }
+.tag { font-family: var(--title); font-size: 0.8rem; letter-spacing: 0.1em; background: var(--c); color: var(--ink); padding: 0 0.35rem; }
+.tag.ult { background: linear-gradient(90deg, #ff6d00, var(--gold)); }
+.tag.combo { background: #fff; }
+.ip-combo { font-size: 0.78rem; line-height: 1.3; color: #ffe0b2; }
+.ip-parody { font-size: 0.75rem; color: #fff3b0; }
+.ip-parody:empty { display: none; }
+.ip-actions { display: flex; justify-content: flex-end; }
+body.is-pc .ip-actions { display: none; }
+.sel-foot { display: flex; align-items: center; gap: 1.2rem; }
+.chars-move { position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%); font-family: var(--title); font-size: 1.6rem; color: var(--gold); text-shadow: 0 0.15rem 0 #000; }
+.chars-screen .row-buttons { justify-content: flex-start; }
+.chars-screen .ip-portrait { width: 11rem; height: 11rem; }
+
+/* ---------- arenas ---------- */
+.arena-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.arena-card { clip-path: polygon(0.8rem 0, 100% 0, calc(100% - 0.8rem) 100%, 0 100%); padding: 0.45rem 0.9rem; }
+
+/* ---------- touch: 8 botões ---------- */
+.tc-pad { grid-template-columns: repeat(4, 14.5vmin); grid-template-rows: repeat(2, 14.5vmin); gap: 1.8vmin; }
+.tc-btn b { font-size: 4.6vmin; }
+.tc-btn span { font-size: 2.2vmin; }
+.tc-grab { background: radial-gradient(circle at 35% 30%, #ffcc80, #e65100); }
+.tc-ult { background: radial-gradient(circle at 35% 30%, #cfd8dc, #37474f); }
+.tc-ult.ready {
+  background: radial-gradient(circle at 35% 30%, #fff, #ff3d00 55%, #b71c1c);
+  animation: spReady 0.4s ease-in-out infinite alternate;
+  opacity: 1;
+}
+
+/* ---------- vitória / luta ---------- */
+.victory-panel, .pause-panel { border-radius: 0; clip-path: polygon(0 0, calc(100% - 1.4rem) 0, 100% 1.4rem, 100% 100%, 1.4rem 100%, 0 calc(100% - 1.4rem)); }
+.pause-help kbd { font-size: 0.95rem; }
+.combo-ex { font-family: var(--title); font-size: 1.3rem; color: var(--gold); letter-spacing: 0.05em; }
+
+@media (max-height: 520px) {
+  .menu-screen { padding-left: 4vw; padding-right: 4vw; }
+  .logo-vini, .logo-fight { font-size: 6.5rem; }
+  .menu-buttons .btn, .menu-buttons .btn.big { font-size: 1.8rem; padding: 0.45rem 1.8rem; }
+  .roster-grid { --sq: min(7vw, 14vh); gap: 0.35rem; padding: 0.35rem; }
+  .ip-portrait { width: 6rem; height: 6rem; }
+  .ip-name { font-size: 1.7rem; }
+  .ip-combo, .ip-style { display: none; }
+  .sel-sub { font-size: 1rem; }
+}
+.ipb { grid-template-columns: 6.5rem 1fr 1.5rem; }
+.segs { display: flex; gap: 0.18rem; }
+.segs i { flex: 1; height: 0.7rem; background: rgba(255, 255, 255, 0.1); transform: skew(-20deg); }
+.ipv { font-family: var(--title); font-weight: normal; color: #fff; text-align: right; }

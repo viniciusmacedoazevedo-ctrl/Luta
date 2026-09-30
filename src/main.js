@@ -6,6 +6,7 @@
   function boot() {
     VF.Settings.load();
     VF.Device.init();
+    VF.applyQuality();
     VF.Keyboard.init();
     VF.Audio.init();
     VF.UI.init();

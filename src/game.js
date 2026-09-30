@@ -24,6 +24,7 @@
 
     go(name, params) {
       if (this.scene && this.scene.exit) this.scene.exit();
+      VF.Audio.baseMusic = null;
       VF.UI.clear();
       VF.Touch.show(false);
       this.sceneName = name;
@@ -117,5 +118,5 @@
     </div>`;
   };
 
-  VF.DISCLAIMER = 'Jogo fictício e humorístico. Lula e Jair Bolsonaro aparecem como caricaturas/paródias; nenhum poder, habilidade ou comportamento do jogo representa fatos sobre pessoas reais.';
+  VF.DISCLAIMER = 'Jogo fictício e humorístico. Personagens baseados em pessoas públicas (Lula, Jair Bolsonaro, Xandao, Albert Einstein) são caricaturas/paródias; nenhum poder, habilidade ou comportamento do jogo representa fatos sobre pessoas reais.';
 })();

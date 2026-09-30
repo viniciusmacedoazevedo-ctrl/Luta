@@ -1,44 +1,58 @@
-/* COMO JOGAR: controles, rounds, SPECIAL e combos */
+/* HOW TO PLAY: controles, golpes direcionais, combos, SPECIAL, ULTIMATE e rounds */
 VF.Game.register('howto', {
   enter() {
     const b = VF.Settings.data.bindings;
     const K = (p, a) => `<kbd>${VF.keyLabel(b[p][a][0])}</kbd>`;
     const row = (a) => `<tr><td>${VF.ACTION_LABELS[a]}</td><td>${K('p1', a)}</td><td>${K('p2', a)}</td></tr>`;
     const s = VF.UI.screen('howto-screen');
-    s.innerHTML = `<h1 class="title">COMO JOGAR</h1>
+    s.innerHTML = `<h1 class="title">HOW TO PLAY</h1>
       <div class="panel howto-panel">
         <section><h2>⌨️ CONTROLES NO PC</h2>
-          <table class="keys"><tr><th>Ação</th><th>Jogador 1</th><th>Jogador 2</th></tr>
-          ${VF.ACTIONS.map(row).join('')}</table>
-          <p><b>Dash / corrida:</b> toque duas vezes rápido para frente (ou para trás, para recuar). Segure depois do dash para correr.</p>
-          <p><b>Ataque aéreo:</b> aperte um ataque durante o pulo. <b>Pausa:</b> Esc ou P. Controles podem ser alterados em Configurações.</p>
+          <table class="keys"><tr><th>Ação</th><th>Player 1</th><th>Player 2</th></tr>${VF.ACTIONS.map(row).join('')}</table>
+          <p>Todas as teclas podem ser trocadas em SETTINGS. Pausa: <kbd>Esc</kbd> ou <kbd>P</kbd>.</p>
         </section>
-        <section><h2>📱 CONTROLES NO CELULAR</h2>
-          <p>Jogue com o celular <b>na horizontal</b>. Lado esquerdo: <b>joystick virtual</b> (arraste para andar, para cima para pular, para baixo para defender, toque duplo para os lados = dash).</p>
-          <p>Lado direito: botões <b>SOCO</b>, <b>CHUTE</b>, <b>FORTE</b>, <b>DEFESA</b>, <b>PULO</b> e <b>ESPECIAL</b> (brilha quando a barra está cheia).</p>
+        <section><h2>🥋 GOLPES DE CADA PERSONAGEM</h2>
+          <table class="keys">
+            <tr><td>Ataque leve / Chute / Pesado</td><td>${K('p1', 'punch')} / ${K('p1', 'kick')} / ${K('p1', 'heavy')}</td></tr>
+            <tr><td>Ataque baixo</td><td>segure ${K('p1', 'down')} + leve ou chute</td></tr>
+            <tr><td>Rasteira (derruba)</td><td>segure ${K('p1', 'down')} + pesado</td></tr>
+            <tr><td>Ataque para frente (arremessa na parede)</td><td>para frente + pesado</td></tr>
+            <tr><td>Ataque para trás (LANÇADOR)</td><td>para trás + qualquer ataque</td></tr>
+            <tr><td>Ataque aéreo / Aéreo pesado (bate no chão)</td><td>no ar: leve ou chute / pesado</td></tr>
+            <tr><td>Agarrão (não pode ser defendido)</td><td>${K('p1', 'grab')}</td></tr>
+            <tr><td>Dash / corrida</td><td>toque duas vezes na direção</td></tr>
+            <tr><td>Defesa</td><td>segure ${K('p1', 'down')}</td></tr>
+          </table>
+        </section>
+        <section><h2>🔥 SISTEMA DE COMBOS</h2>
+          <p>Quando um golpe <b>acerta</b>, você pode <b>cancelá-lo</b> no próximo. Exemplo:</p>
+          <p class="combo-ex">LEVE → LEVE → CHUTE → PARA TRÁS (lança) → ↑ (pulo) → AÉREO → SOCO AÉREO → AÉREO PESADO (bate no chão) → quica → LEVE → ESPECIAL</p>
+          <ul>
+            <li><b>Lançador</b> joga o oponente para cima: aperte ↑ logo depois para continuar o combo no ar.</li>
+            <li><b>Aéreo pesado</b> bate o oponente no chão: ele quica e dá para continuar.</li>
+            <li><b>Pesado</b> e <b>para frente</b> podem ser cancelados em <b>dash</b> (toque duplo para frente) e continuar.</li>
+            <li><b>Para frente</b> arremessa o oponente e ele <b>quica na parede</b>.</li>
+            <li>Qualquer golpe que acerta pode ser cancelado em <b>ESPECIAL</b> ou <b>ULTIMATE</b>.</li>
+            <li>Cada personagem tem rotas diferentes (veja em CHARACTERS). Quanto maior o combo (x3, x5, x8, x10...), mais efeitos, sons e mais rápido enchem as barras.</li>
+          </ul>
+        </section>
+        <section><h2>⚡ SPECIAL</h2>
+          <p>A barra SPECIAL enche ao <b>atacar</b>, <b>receber dano</b> e fazer <b>combos</b>. Cheia, ela brilha: aperte ${K('p1', 'special')} (ou o botão SPECIAL no celular). Depois volta a zero. Cada personagem tem um especial único (raios, tornados, perucas, drones, ondas sonoras, prisão, câmera lenta...).</p>
+        </section>
+        <section><h2>💥 ULTIMATE</h2>
+          <p>A barra ULTIMATE enche mais devagar. Cheia, aperte ${K('p1', 'ultimate')}: a câmera aproxima, o fundo escurece, a música muda e começa uma sequência cinematográfica que termina com um impacto enorme. Algumas ultimates avançam até o oponente (podem errar!), outras atingem a arena inteira.</p>
+        </section>
+        <section><h2>📱 CELULAR</h2>
+          <p>Jogue na <b>horizontal</b>. Esquerda: joystick (↑ pula, ↓ baixo/defesa, ← + golpe = lançador, toque duplo = dash). Direita: PUNCH, KICK, HEAVY, BLOCK, JUMP, GRAB, SPECIAL e ULTIMATE.</p>
         </section>
         <section><h2>🥊 ROUNDS</h2>
-          <p>Cada luta tem <b>2 rounds de 60 segundos</b>. Zere a vida do oponente para um <b>K.O.</b>; se o tempo acabar, vence quem tiver <b>mais vida</b>.</p>
-          <p>Ganhou os 2 rounds? Vitória imediata. Deu <b>1 x 1</b>? Acontece o <b>FINAL ROUND</b> (desempate de 60s) e quem vencer leva a partida.</p>
-          <p>Se as vidas ficarem iguais, há um <b>EMPATE</b> e o desempate vai para: mais dano causado → maior combo → mais golpes → cara ou coroa.</p>
-        </section>
-        <section><h2>⚡ BARRA SPECIAL</h2>
-          <p>A barra enche quando você <b>ataca</b>, <b>recebe dano</b> e faz <b>combos</b>. Cheia, ela brilha — aperte ESPECIAL para soltar o poder. Depois de usar, volta a zero.</p>
-          <ul>${VF.CHARACTERS.map((d) => `<li>${d.special.icon} <b>${d.name} — ${d.special.name}:</b> ${d.special.desc}</li>`).join('')}</ul>
-        </section>
-        <section><h2>🔥 COMBOS</h2>
-          <p>Acerte golpes em sequência (menos de 1 segundo entre eles) para montar combos: <b>COMBO x3</b>, <b>x5</b>, <b>x10</b>… cada nível tem efeitos e sons diferentes e enche mais a barra SPECIAL.</p>
-          <p>Dica: quando um golpe acerta, aperte o próximo logo em seguida para encadear (ex.: Soco → Soco → Chute → Forte). O especial também pode encerrar um combo!</p>
-        </section>
-        <section><h2>🛡️ DEFESA</h2>
-          <p>Segure <b>defesa</b> para bloquear golpes vindos da frente (você ainda recebe um dano pequeno). Agarrões e alguns especiais não podem ser bloqueados.</p>
+          <p>ROUND 1 → 3 → 2 → 1 → FIGHT! Cada round dura <b>60 segundos</b>. K.O. ou, no fim do tempo, vence quem tiver mais vida. 2 rounds; se ficar <b>1 x 1</b>, acontece o <b>FINAL ROUND</b>. Vidas iguais = EMPATE, decidido por mais dano → maior combo → mais golpes → cara ou coroa.</p>
         </section>
         <section class="warn"><h2>⚠️ AVISO</h2><p>${VF.DISCLAIMER}</p></section>
       </div>
       <div class="row-buttons"></div>`;
     VF.UI.button('◀ VOLTAR', () => VF.Game.go('menu'), 'back', s.querySelector('.row-buttons'));
     VF.UI.enableNav(s, () => VF.Game.go('menu'));
-    // rolar o painel com as setas
     this.off = VF.Keyboard.onKey((e) => {
       const p = s.querySelector('.howto-panel');
       if (e.code === 'ArrowDown') p.scrollBy(0, 60);

@@ -187,4 +187,26 @@
     burst(c, o, { type: 'lowpass', f: 1200, f2: 80, d: 0.7, vol: 0.6 });
     tone(c, o, { type: 'sawtooth', f: 220, f2: 55, d: 0.6, vol: 0.12, lp: 900 });
   };
+
+  // ---------- v2: novos sons ----------
+  S.launch = (c, o) => { burst(c, o, { type: 'bandpass', f: 400, f2: 2400, d: 0.2, vol: 0.4, q: 2 }); tone(c, o, { type: 'sine', f: 160, f2: 60, d: 0.2, vol: 0.5 }); };
+  S.boom = (c, o) => { tone(c, o, { type: 'sine', f: 70, f2: 25, d: 1.0, vol: 0.9 }); burst(c, o, { type: 'lowpass', f: 2500, f2: 80, d: 0.9, vol: 0.7 }); };
+  S.gavel = (c, o) => { tone(c, o, { type: 'square', f: 220, f2: 110, d: 0.08, vol: 0.2, lp: 1200 }); burst(c, o, { type: 'bandpass', f: 900, d: 0.08, vol: 0.5, q: 3 }); tone(c, o, { type: 'square', f: 220, f2: 110, d: 0.08, vol: 0.2, lp: 1200, t: 0.18 }); burst(c, o, { type: 'bandpass', f: 900, d: 0.08, vol: 0.5, q: 3, t: 0.18 }); };
+  S.zap = (c, o) => { tone(c, o, { type: 'sawtooth', f: 1800, f2: 300, d: 0.15, vol: 0.12, lp: 5000 }); burst(c, o, { type: 'highpass', f: 3000, d: 0.12, vol: 0.2 }); };
+  S.spin = (c, o) => { for (let i = 0; i < 4; i++) burst(c, o, { type: 'bandpass', f: 800 + i * 300, f2: 2000, d: 0.1, vol: 0.2, q: 2, t: i * 0.1 }); };
+  S.wind = (c, o) => { burst(c, o, { type: 'bandpass', f: 300, f2: 1200, a: 0.2, d: 1.2, vol: 0.35, q: 1.5 }); };
+  S.kickball = (c, o) => { tone(c, o, { type: 'sine', f: 200, f2: 70, d: 0.12, vol: 0.6 }); burst(c, o, { type: 'lowpass', f: 1800, f2: 300, d: 0.08, vol: 0.5 }); };
+  S.digital = (c, o) => { for (let i = 0; i < 6; i++) tone(c, o, { type: 'square', f: 400 + Math.random() * 1600, d: 0.05, vol: 0.06, t: i * 0.05 }); };
+  S.bell = (c, o) => { [0, 7, 12].forEach((s, i) => tone(c, o, { type: 'sine', f: 660 * Math.pow(2, s / 12), d: 1.2, vol: 0.12, t: i * 0.06 })); };
+  S.flex = (c, o) => { tone(c, o, { type: 'sawtooth', f: 90, f2: 180, d: 0.3, vol: 0.25, lp: 800 }); burst(c, o, { type: 'lowpass', f: 600, d: 0.3, vol: 0.4 }); };
+  S.sparkle = (c, o) => { for (let i = 0; i < 5; i++) tone(c, o, { type: 'triangle', f: 1400 + i * 350, d: 0.12, vol: 0.07, t: i * 0.05 }); };
+  S.clock = (c, o) => { for (let i = 0; i < 6; i++) tone(c, o, { type: 'square', f: i % 2 ? 1200 : 900, d: 0.03, vol: 0.08, t: i * 0.12 }); tone(c, o, { type: 'sine', f: 600, f2: 150, d: 0.9, vol: 0.12, t: 0.2 }); };
+  S.heartbreak = (c, o) => { burst(c, o, { type: 'highpass', f: 2500, d: 0.25, vol: 0.35 }); tone(c, o, { type: 'triangle', f: 880, f2: 220, d: 0.4, vol: 0.12 }); };
+  S.sing = (c, o) => { [0, 4, 7, 12].forEach((s, i) => { const f = 523 * Math.pow(2, s / 12); tone(c, o, { type: 'sine', f, d: 0.35, vol: 0.12, t: i * 0.15, detune: 8 }); tone(c, o, { type: 'triangle', f: f * 2, d: 0.3, vol: 0.04, t: i * 0.15 }); }); };
+  S.countdown = (c, o) => tone(c, o, { type: 'square', f: 880, d: 0.12, vol: 0.1, lp: 3000 });
+  S.ultimate = (c, o) => {
+    tone(c, o, { type: 'sawtooth', f: 80, f2: 900, d: 0.9, vol: 0.18, lp: 2500 });
+    [0, 3, 7, 10].forEach((s, i) => tone(c, o, { type: 'square', f: 220 * Math.pow(2, s / 12), d: 0.6, vol: 0.06, t: 0.3 + i * 0.08, lp: 2500 }));
+    burst(c, o, { type: 'lowpass', f: 400, f2: 3000, a: 0.3, d: 0.6, vol: 0.4 });
+  };
 })();
