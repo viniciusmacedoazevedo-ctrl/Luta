@@ -52,6 +52,9 @@
     window.VF_READY = true;
   }
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
-  else boot();
+  function safeBoot() {
+    try { boot(); } catch (e) { if (window.VF_BOOT_FAIL) window.VF_BOOT_FAIL(e); else throw e; }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', safeBoot);
+  else safeBoot();
 })();

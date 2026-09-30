@@ -29,6 +29,35 @@
   </div>
   <noscript>Ative o JavaScript para jogar VINI FIGHT.</noscript>
 
+  <!-- proteção de inicialização: se algo falhar, mostra o erro em vez de tela preta -->
+  <script>
+    (function () {
+      var errs = [];
+      window.addEventListener('error', function (e) {
+        errs.push((e.message || 'erro ao carregar') + (e.filename ? ' — ' + e.filename.split('/').slice(-2).join('/') + ':' + (e.lineno || '') : (e.target && e.target.src ? ' — ' + e.target.src : '')));
+      }, true);
+      window.VF_BOOT_FAIL = function (err) {
+        if (window.VF_READY || document.getElementById('bootfail')) return;
+        if (err) errs.push(String(err && err.stack || err));
+        var d = document.createElement('div');
+        d.id = 'bootfail';
+        d.style.cssText = 'position:fixed;inset:0;z-index:99999;background:#120a24;color:#fff;font:15px system-ui,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px;text-align:center';
+        d.innerHTML = '<div style="font-size:30px;font-weight:800;color:#ffd600">VINI FIGHT não carregou</div>' +
+          '<div>Provavelmente o navegador guardou arquivos de uma versão antiga.</div>' +
+          '<button id="bootfix" style="font-size:18px;padding:12px 22px;border-radius:10px;border:0;background:#ffd600;font-weight:800;cursor:pointer">LIMPAR CACHE E RECARREGAR</button>' +
+          '<pre style="max-width:90vw;max-height:40vh;overflow:auto;font-size:12px;opacity:.7;white-space:pre-wrap;text-align:left"></pre>';
+        d.querySelector('pre').textContent = errs.slice(0, 6).join('\n') || 'O jogo não iniciou a tempo.';
+        d.querySelector('#bootfix').onclick = function () {
+          var jobs = [];
+          if (navigator.serviceWorker) jobs.push(navigator.serviceWorker.getRegistrations().then(function (rs) { return Promise.all(rs.map(function (r) { return r.unregister(); })); }));
+          if (window.caches) jobs.push(caches.keys().then(function (ks) { return Promise.all(ks.map(function (k) { return caches.delete(k); })); }));
+          Promise.all(jobs).catch(function () {}).then(function () { location.reload(); });
+        };
+        document.body.appendChild(d);
+      };
+      window.addEventListener('load', function () { setTimeout(function () { if (!window.VF_READY) window.VF_BOOT_FAIL(); }, 4000); });
+    })();
+  </script>
   <!-- configuração -->
   <script src="config/game.js"></script>
   <script src="config/controls.js"></script>
