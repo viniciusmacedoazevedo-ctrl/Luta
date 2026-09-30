@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="70%">
+      <stop offset="0" stop-color="#5a1a8c"/>
+      <stop offset="1" stop-color="#0b0616"/>
+    </radialGradient>
+    <linearGradient id="v" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff59d"/>
+      <stop offset="0.5" stop-color="#ffd600"/>
+      <stop offset="1" stop-color="#ff6d00"/>
+    </linearGradient>
+    <linearGradient id="f" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff8a80"/>
+      <stop offset="1" stop-color="#d50000"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+  <g opacity="0.25" fill="#ff3d71">
+    <path d="M256 256 L512 180 L512 240Z"/><path d="M256 256 L0 320 L0 260Z"/>
+    <path d="M256 256 L200 0 L260 0Z"/><path d="M256 256 L320 512 L260 512Z"/>
+  </g>
+  <path d="M300 40 L180 270 L260 270 L200 470 L360 220 L275 220 L330 40Z" fill="#00e5ff" stroke="#120a1c" stroke-width="14" stroke-linejoin="round" opacity="0.9"/>
+  <g transform="rotate(-8 256 256)" font-family="Impact, 'Arial Black', sans-serif" font-weight="900" text-anchor="middle" stroke="#120a1c" stroke-width="16" paint-order="stroke" stroke-linejoin="round">
+    <text x="250" y="240" font-size="190" fill="url(#v)">VINI</text>
+    <text x="268" y="400" font-size="150" fill="url(#f)">FIGHT</text>
+  </g>
+</svg>

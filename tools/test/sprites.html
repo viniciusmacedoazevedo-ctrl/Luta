@@ -1,0 +1,34 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Sprites</title></head>
+<body style="margin:0;background:#333">
+<canvas id="c" width="1500" height="1300"></canvas>
+<script src="../../config/game.js"></script>
+<script src="../../config/controls.js"></script>
+<script src="../../config/characters.js"></script>
+<script src="../../src/core/math.js"></script>
+<script src="../../assets/characters/rig.js"></script>
+<script src="../../assets/characters/poses.js"></script>
+<script src="../../assets/characters/vini.js"></script>
+<script src="../../assets/characters/arthur.js"></script>
+<script src="../../assets/characters/juexu.js"></script>
+<script src="../../assets/characters/lula.js"></script>
+<script src="../../assets/characters/bolsonaro.js"></script>
+<script>
+const ctx = document.getElementById('c').getContext('2d');
+const P = VF.Poses;
+const ids = ['vini','arthur','juexu','lula','bolsonaro'];
+const poses = [
+  ['idle', P.idle(0), 'normal'], ['walk', P.walk(0.3), 'normal'], ['punch', P.K.PUNCH, 'angry'], ['kick', P.K.KICK, 'angry'],
+  ['heavy', P.K.HEAVY, 'angry'], ['block', P.K.BLOCK, 'normal'], ['hurt', P.K.HURT, 'hurt'], ['jump', P.K.JUMP, 'normal'],
+  ['down', P.K.LYING, 'ko'], ['victory', null, 'happy']
+];
+ids.forEach((id, row) => {
+  const skin = VF.Skins[id];
+  poses.forEach(([n, pose, e], col) => {
+    if (!pose) pose = skin.victoryPose(0.3);
+    const f = { state: n === 'victory' ? 'victory' : n, vx: 0 };
+    ctx.fillStyle = '#555'; ctx.fillRect(col*150, row*260+240, 150, 2);
+    VF.Rig.draw(ctx, skin, pose, { x: col*150+60, y: row*260+240, facing: 1, scale: 0.95, expr: e, fighter: f, t: 0.3 });
+  });
+});
+ids.forEach((id,i)=> VF.Rig.portrait(ctx, VF.Skins[id], 80+i*140, 1450-200, 110, {}));
+</script></body></html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#120a24">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="VINI FIGHT — jogo de luta 2D cartunesco para PC e celular (paródia fictícia).">
+  <title>VINI FIGHT</title>
+  <link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="ui/styles.css">
+</head>
+<body class="is-pc">
+  <div id="app">
+    <canvas id="game" width="1280" height="720"></canvas>
+    <div id="ui"></div>
+    <div id="touch"></div>
+    <div id="rotate">
+      <div class="rotate-icon">📱</div>
+      <div>Gire o celular para a <b>horizontal</b></div>
+      <small>VINI FIGHT é jogado em modo paisagem</small>
+    </div>
+  </div>
+  <noscript>Ative o JavaScript para jogar VINI FIGHT.</noscript>
+
+  <!-- configuração -->
+  <script src="config/game.js"></script>
+  <script src="config/controls.js"></script>
+  <script src="config/audio.js"></script>
+  <script src="config/characters.js"></script>
+  <script src="config/arenas.js"></script>
+  <!-- núcleo -->
+  <script src="src/core/math.js"></script>
+  <script src="src/core/storage.js"></script>
+  <script src="src/core/device.js"></script>
+  <script src="src/core/input.js"></script>
+  <script src="src/core/audio.js"></script>
+  <!-- assets procedurais -->
+  <script src="assets/audio/synth.js"></script>
+  <script src="assets/audio/music.js"></script>
+  <script src="assets/effects/particles.js"></script>
+  <script src="assets/effects/effects.js"></script>
+  <script src="assets/effects/projectile-fx.js"></script>
+  <script src="assets/characters/rig.js"></script>
+  <script src="assets/characters/poses.js"></script>
+  <script src="assets/characters/vini.js"></script>
+  <script src="assets/characters/arthur.js"></script>
+  <script src="assets/characters/juexu.js"></script>
+  <script src="assets/characters/lula.js"></script>
+  <script src="assets/characters/bolsonaro.js"></script>
+  <script src="assets/backgrounds/common.js"></script>
+  <script src="assets/backgrounds/menu-bg.js"></script>
+  <script src="assets/backgrounds/rua-noite.js"></script>
+  <script src="assets/backgrounds/arena-urbana.js"></script>
+  <script src="assets/backgrounds/praca.js"></script>
+  <script src="assets/backgrounds/futurista.js"></script>
+  <!-- sistemas de jogo -->
+  <script src="scripts/projectile.js"></script>
+  <script src="scripts/specials.js"></script>
+  <script src="scripts/fighter.js"></script>
+  <script src="scripts/combat.js"></script>
+  <script src="scripts/ai.js"></script>
+  <script src="scripts/match.js"></script>
+  <script src="scripts/puppet.js"></script>
+  <!-- interface -->
+  <script src="ui/dom.js"></script>
+  <script src="ui/hud.js"></script>
+  <script src="ui/announcer.js"></script>
+  <script src="ui/touch-controls.js"></script>
+  <!-- jogo + cenas -->
+  <script src="src/game.js"></script>
+  <script src="scenes/title.js"></script>
+  <script src="scenes/menu.js"></script>
+  <script src="scenes/mode.js"></script>
+  <script src="scenes/select.js"></script>
+  <script src="scenes/arena.js"></script>
+  <script src="scenes/fight.js"></script>
+  <script src="scenes/victory.js"></script>
+  <script src="scenes/characters.js"></script>
+  <script src="scenes/settings.js"></script>
+  <script src="scenes/howto.js"></script>
+  <script src="scenes/exit.js"></script>
+  <script src="src/main.js"></script>
+</body>
+</html>

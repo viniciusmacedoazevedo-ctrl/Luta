@@ -1,0 +1,17 @@
+{
+  "name": "VINI FIGHT",
+  "short_name": "VINI FIGHT",
+  "description": "Jogo de luta 2D cartunesco (paródia fictícia) para PC e celular.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#0b0616",
+  "theme_color": "#120a24",
+  "lang": "pt-BR",
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "assets/icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

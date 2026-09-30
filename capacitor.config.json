@@ -1,0 +1,8 @@
+{
+  "appId": "com.vinifight.game",
+  "appName": "VINI FIGHT",
+  "webDir": "www",
+  "android": {
+    "backgroundColor": "#0b0616"
+  }
+}
