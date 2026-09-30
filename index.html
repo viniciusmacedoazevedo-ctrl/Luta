@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#120a24">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="VINI FIGHT — jogo de luta 2D com 25 lutadores, combos, especiais e ultimates. PC e celular.">
+  <title>VINI FIGHT</title>
+  <link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="ui/styles.css">
+</head>
+<body class="is-pc">
+  <div id="app">
+    <canvas id="game" width="1280" height="720"></canvas>
+    <div id="ui"><div id="boot" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#fff;font:18px system-ui,sans-serif;text-align:center;padding:20px">
+      <div style="font-size:34px;font-weight:800;color:#ffd600">VINI FIGHT</div>
+      <div>Carregando…</div>
+      <div id="boot-hint" style="font-size:14px;opacity:0;animation:vfhint 0s 8s forwards">Demorando? Aperte <b>Ctrl+Shift+R</b> ou abra <b>?reset</b> no fim do endereço.</div>
+      <style>@keyframes vfhint{to{opacity:.85}}</style>
+    </div></div>
+    <div id="touch"></div>
+    <div id="rotate">
+      <div class="rotate-icon">📱</div>
+      <div>Gire o celular para a <b>horizontal</b></div>
+      <small>VINI FIGHT é jogado em modo paisagem</small>
+    </div>
+  </div>
+  <noscript>Ative o JavaScript para jogar VINI FIGHT.</noscript>
+
+  <!-- proteção de inicialização: se algo falhar, mostra o erro em vez de tela preta -->
+  <script>
+    (function () {
+      // ?reset no endereço: apaga cache/service worker antigos e recarrega limpo
+      if (/[?&]reset\b/.test(location.search)) {
+        var jobs = [];
+        if (navigator.serviceWorker) jobs.push(navigator.serviceWorker.getRegistrations().then(function (rs) { return Promise.all(rs.map(function (r) { return r.unregister(); })); }));
+        if (window.caches) jobs.push(caches.keys().then(function (ks) { return Promise.all(ks.map(function (k) { return caches.delete(k); })); }));
+        try { localStorage.clear(); } catch (e) {}
+        Promise.all(jobs).catch(function () {}).then(function () { location.replace(location.pathname); });
+        window.VF_RESETTING = true;
+      }
+      var errs = [];
+      window.addEventListener('error', function (e) {
+        errs.push((e.message || 'erro ao carregar') + (e.filename ? ' — ' + e.filename.split('/').slice(-2).join('/') + ':' + (e.lineno || '') : (e.target && e.target.src ? ' — ' + e.target.src : '')));
+      }, true);
+      window.VF_BOOT_FAIL = function (err) {
+        if (window.VF_READY || document.getElementById('bootfail')) return;
+        if (err) errs.push(String(err && err.stack || err));
+        var d = document.createElement('div');
+        d.id = 'bootfail';
+        d.style.cssText = 'position:fixed;inset:0;z-index:99999;background:#120a24;color:#fff;font:15px system-ui,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px;text-align:center';
+        d.innerHTML = '<div style="font-size:30px;font-weight:800;color:#ffd600">VINI FIGHT não carregou</div>' +
+          (/\.zip|\/Temp\//i.test(location.href) && location.protocol === 'file:'
+            ? '<div style="font-size:18px;max-width:640px">Você abriu o jogo <b>de dentro do arquivo .zip</b>. O Windows só copia o index.html, sem os outros arquivos.<br><br>' +
+              'Feche esta aba, clique com o botão direito no .zip → <b>Extrair tudo…</b> → <b>Extrair</b>, e dê dois cliques no <b>index.html</b> da pasta extraída.</div>'
+            : '<div>Provavelmente o navegador guardou arquivos de uma versão antiga.</div>') +
+          '<button id="bootfix" style="font-size:18px;padding:12px 22px;border-radius:10px;border:0;background:#ffd600;font-weight:800;cursor:pointer">LIMPAR CACHE E RECARREGAR</button>' +
+          '<pre style="max-width:90vw;max-height:40vh;overflow:auto;font-size:12px;opacity:.7;white-space:pre-wrap;text-align:left"></pre>';
+        d.querySelector('pre').textContent = errs.slice(0, 6).join('\n') || 'O jogo não iniciou a tempo.';
+        d.querySelector('#bootfix').onclick = function () {
+          var jobs = [];
+          if (navigator.serviceWorker) jobs.push(navigator.serviceWorker.getRegistrations().then(function (rs) { return Promise.all(rs.map(function (r) { return r.unregister(); })); }));
+          if (window.caches) jobs.push(caches.keys().then(function (ks) { return Promise.all(ks.map(function (k) { return caches.delete(k); })); }));
+          Promise.all(jobs).catch(function () {}).then(function () { location.reload(); });
+        };
+        document.body.appendChild(d);
+      };
+      // não depende do evento 'load' (que pode nunca chegar se um arquivo travar)
+      setTimeout(function () { if (!window.VF_READY && !window.VF_RESETTING) window.VF_BOOT_FAIL(); }, 12000);
+      window.addEventListener('load', function () { setTimeout(function () { if (!window.VF_READY && !window.VF_RESETTING) window.VF_BOOT_FAIL(); }, 4000); });
+    })();
+  </script>
+  <!-- configuração -->
+  <script src="config/game.js"></script>
+  <script src="config/controls.js"></script>
+  <script src="config/audio.js"></script>
+  <script src="config/movesets.js"></script>
+  <script src="config/roster.js"></script>
+  <script src="config/arenas.js"></script>
+  <!-- núcleo -->
+  <script src="src/core/math.js"></script>
+  <script src="src/core/storage.js"></script>
+  <script src="src/core/device.js"></script>
+  <script src="src/core/input.js"></script>
+  <script src="src/core/audio.js"></script>
+  <!-- áudio e efeitos -->
+  <script src="assets/audio/synth.js"></script>
+  <script src="assets/audio/music.js"></script>
+  <script src="assets/effects/particles.js"></script>
+  <script src="assets/effects/effects.js"></script>
+  <script src="assets/effects/bigfx.js"></script>
+  <script src="assets/effects/projectile-fx.js"></script>
+  <!-- rig, aparência e animações -->
+  <script src="assets/characters/_shared/rig.js"></script>
+  <script src="assets/characters/_shared/appearance.js"></script>
+  <script src="assets/characters/_shared/poses.js"></script>
+  <!-- personagens (um arquivo por pasta) -->
+  <script src="assets/characters/vini/character.js"></script>
+  <script src="assets/characters/arthur/character.js"></script>
+  <script src="assets/characters/julia_eduarda/character.js"></script>
+  <script src="assets/characters/lula/character.js"></script>
+  <script src="assets/characters/bolsonaro/character.js"></script>
+  <script src="assets/characters/xandao/character.js"></script>
+  <script src="assets/characters/will/character.js"></script>
+  <script src="assets/characters/deyverson/character.js"></script>
+  <script src="assets/characters/wal/character.js"></script>
+  <script src="assets/characters/dg/character.js"></script>
+  <script src="assets/characters/gabriel/character.js"></script>
+  <script src="assets/characters/muskito/character.js"></script>
+  <script src="assets/characters/docinho/character.js"></script>
+  <script src="assets/characters/livia/character.js"></script>
+  <script src="assets/characters/laura/character.js"></script>
+  <script src="assets/characters/anny/character.js"></script>
+  <script src="assets/characters/julia_negreiros/character.js"></script>
+  <script src="assets/characters/allane/character.js"></script>
+  <script src="assets/characters/bia/character.js"></script>
+  <script src="assets/characters/einstein/character.js"></script>
+  <script src="assets/characters/jovanira/character.js"></script>
+  <script src="assets/characters/giovana/character.js"></script>
+  <script src="assets/characters/elena/character.js"></script>
+  <script src="assets/characters/lutu/character.js"></script>
+  <script src="assets/characters/leidiane/character.js"></script>
+  <!-- cenários -->
+  <script src="assets/backgrounds/common.js"></script>
+  <script src="assets/backgrounds/menu-bg.js"></script>
+  <script src="assets/backgrounds/rua-noite.js"></script>
+  <script src="assets/backgrounds/escola.js"></script>
+  <script src="assets/backgrounds/campo.js"></script>
+  <script src="assets/backgrounds/igreja.js"></script>
+  <script src="assets/backgrounds/arena-urbana.js"></script>
+  <script src="assets/backgrounds/futurista.js"></script>
+  <script src="assets/backgrounds/praca.js"></script>
+  <!-- sistemas de jogo -->
+  <script src="scripts/projectile.js"></script>
+  <script src="scripts/specials.js"></script>
+  <script src="scripts/ultimates.js"></script>
+  <script src="scripts/camera.js"></script>
+  <script src="scripts/fighter.js"></script>
+  <script src="scripts/combat.js"></script>
+  <script src="scripts/ai.js"></script>
+  <script src="scripts/match.js"></script>
+  <script src="scripts/puppet.js"></script>
+  <!-- interface -->
+  <script src="ui/dom.js"></script>
+  <script src="ui/hud.js"></script>
+  <script src="ui/announcer.js"></script>
+  <script src="ui/touch-controls.js"></script>
+  <script src="ui/roster-grid.js"></script>
+  <!-- jogo + cenas -->
+  <script src="src/game.js"></script>
+  <script src="scenes/title.js"></script>
+  <script src="scenes/menu.js"></script>
+  <script src="scenes/mode.js"></script>
+  <script src="scenes/select.js"></script>
+  <script src="scenes/arena.js"></script>
+  <script src="scenes/fight.js"></script>
+  <script src="scenes/victory.js"></script>
+  <script src="scenes/characters.js"></script>
+  <script src="scenes/settings.js"></script>
+  <script src="scenes/howto.js"></script>
+  <script src="scenes/exit.js"></script>
+  <script src="src/main.js"></script>
+</body>
+</html>
